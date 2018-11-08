@@ -1,10 +1,12 @@
 from collections import deque
 import numpy as np
+import random
 from keras.layers import Convolution2D,Flatten,Dense,Activation
 from keras.models import Sequential
 from keras.optimizers import Adam
 from keras.losses import binary_crossentropy,mean_squared_error
-from keras.initializers import random_uniform
+from keras.initializers import random_normal
+
 
 class DQL_agent():
 
@@ -15,7 +17,8 @@ class DQL_agent():
         self.action_space = action_space
 
         #Learning parameters
-        self.epsilon = 0.1
+        self.epsilon = 0.5
+        self.gamma = 0.1
 
         #Memory replay parameters
         self.memory_size = 1000
@@ -32,55 +35,62 @@ class DQL_agent():
         self.action = None
         self.reward = None
         self.initial_move = True
+
+        #Max number of steps between two experience replays
+        self.experience_nb_steps=100
+        #Size of a batch for experience replay
+        self.experience_batch_size = 50
+        #A counter of the number of steps since last experience replay
         self.batch_learning = 0
+
+    def reinitialize_agent(self):
+        self.initial_move = True
+        self.batch_learning = 0
+        self.D = deque([], self.memory_size)
 
     def _build_model(self):
 
-        #To define!!!
-
-        '''
-        model = Sequential()
-        #keras.initializers.random_uniform(minval=-0.1, maxval=0.1, seed=None)
-        img_channels, img_rows, img_cols = 3, 250, 160
-        S = Input(shape=(img_rows, img_cols, img_channels,1), name='Input')
-        h0 = Convolution2D(16, kernel_size=(8, 8), strides=(4, 4), activation='relu',
-                           kernel_initializer='random_uniform', bias_initializer='random_uniform')(S)
-        h1 = Convolution2D(32, kernel_size=(4, 4), strides=(2, 2), activation='relu',
-                           kernel_initializer='random_uniform', bias_initializer='random_uniform')(h0)
-        h2 = Flatten()(h1)
-        h3 = Dense(256, activation='relu', kernel_initializer='random_uniform', bias_initializer='random_uniform')(h2)
-        P = Dense(1, name='o_P', activation='sigmoid', kernel_initializer='random_uniform',
-                  bias_initializer='random_uniform')(h3)
-        V = Dense(1, name='o_V', kernel_initializer='random_uniform', bias_initializer='random_uniform')(h3)
-
-        model = Model(inputs=S, outputs=[P, V])
-        rms = rmsprop(lr=self.learning_rate_cnn, rho=0.99, epsilon=0.1)
-        model.compile(loss={'o_P': binary_crossentropy, 'o_V': mean_squared_error}, loss_weights={'o_P': 1., 'o_V': 0.5},
-                      optimizer=rms)
-
-        '''
-
         img_channels, img_rows, img_cols = 3, 250, 160
 
+        init = random_normal(mean=0.0, stddev=0.05, seed=None)
         model = Sequential()
-        model.add(Convolution2D(32, 8, 8, subsample=(4, 4), border_mode='same',input_shape=(img_rows, img_cols, img_channels,)))  # 250*160*3
+        model.add(Convolution2D(32, 8, 8, subsample=(4, 4), border_mode='same',input_shape=(img_rows, img_cols, img_channels,),kernel_initializer=init))  # 250*160*3
         model.add(Activation('relu'))
-        model.add(Convolution2D(64, 4, 4, subsample=(2, 2), border_mode='same'))
+        model.add(Convolution2D(64, 4, 4, subsample=(2, 2), border_mode='same',kernel_initializer=init))
         model.add(Activation('relu'))
-        model.add(Convolution2D(64, 3, 3, subsample=(1, 1), border_mode='same'))
+        model.add(Convolution2D(64, 3, 3, subsample=(1, 1), border_mode='same',kernel_initializer=init))
         model.add(Activation('relu'))
         model.add(Flatten())
-        model.add(Dense(512))
+        model.add(Dense(512,kernel_initializer=init))
         model.add(Activation('relu'))
-        model.add(Dense(3))
+        model.add(Dense(3,activation='linear',kernel_initializer=init))
         adam = Adam(lr=self.learning_rate_cnn)
         model.compile(loss='mse', optimizer=adam)
         return model
 
 
     def experience_replay(self):
-    #TODO: Implement experience replay
-        return 0
+        if(self.batch_learning == self.experience_nb_steps):
+            batch = random.sample(self.D, self.experience_batch_size)
+
+            for i in range(0, len(batch)):
+                state_t = batch[i][1]
+                state_t1 = batch[i][0]
+                action = batch[i][2]
+                reward = batch[i][3]
+                done = batch[i][4]
+
+                if(done):
+                    target=reward
+                else:
+                    #When predicting, predict returns [[proba1,proba2,proba3]]
+                    target = reward + self.gamma*np.amax(self.Q.predict(state_t)[0])
+                target_f = self.Q.predict(state_t1)[0]
+                target_f[action] = target
+                print(state_t.shape)
+                print(target_f.shape)
+                self.Q.fit(state_t,target, epochs=1, verbose=1)
+
 
     def act(self,state):
         '''
@@ -103,15 +113,12 @@ class DQL_agent():
         else:
             new_action = np.argmax(q_values)
 
+        #We have done an additional step
+        self.batch_learning += 1
         return new_action
 
 
 
 
-
-        return 0
-
-
-
-    def add_to_memory(self,state,previous_state,action,reward):
-        self.D.append(state,previous_state,action,reward)
+    def add_to_memory(self,state,previous_state,action,reward,done):
+        self.D.append([state,previous_state,action,reward,done])
