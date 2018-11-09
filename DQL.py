@@ -18,10 +18,12 @@ class DQL_agent():
 
         #Learning parameters
         self.epsilon = 0.5
-        self.gamma = 0.1
+        self.epsilon_decay = 0.99
+        self.final_epsilon = 0.0001
+        self.gamma = 0.95
 
         #Memory replay parameters
-        self.memory_size = 1000
+        self.memory_size = 2000
         # Format of an experience is: (state,previous_state,action,reward)
         self.D = deque([],self.memory_size)
 
@@ -39,7 +41,7 @@ class DQL_agent():
         #Max number of steps between two experience replays
         self.experience_nb_steps=1000
         #Size of a batch for experience replay
-        self.experience_batch_size = 50
+        self.experience_batch_size = 100
         #A counter of the number of steps since last experience replay
         self.batch_learning = 0
 
@@ -61,7 +63,7 @@ class DQL_agent():
         model.add(Convolution2D(64, 3, 3, subsample=(1, 1), border_mode='same',kernel_initializer=init))
         model.add(Activation('relu'))
         model.add(Flatten())
-        model.add(Dense(512,kernel_initializer=init))
+        model.add(Dense(128,kernel_initializer=init))
         model.add(Activation('relu'))
         model.add(Dense(3,activation='linear',kernel_initializer=init))
         adam = Adam(lr=self.learning_rate_cnn)
@@ -86,12 +88,14 @@ class DQL_agent():
                     #When predicting, predict returns [[proba1,proba2,proba3]]
                     target = reward + self.gamma*np.amax(self.Q.predict(state_t1)[0])
 
-                print(target)
                 # When predicting, predict returns [[proba1,proba2,proba3]]
                 target_f = self.Q.predict(state_t1)[0]
                 target_f[action] = target
                 target_f = np.array(target_f)
-                self.Q.fit(state_t,target_f.reshape((1,3)), epochs=1, verbose=1)
+                self.Q.fit(state_t,target_f.reshape((1,3)), epochs=1, verbose=0)
+
+            if(self.epsilon > self.final_epsilon):
+                self.epsilon = self.epsilon*self.epsilon_decay
 
 
 

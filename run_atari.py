@@ -9,8 +9,6 @@ env_to_use = 'Skiing-v0'
 env = gym.make(env_to_use)
 
 
-print(env.observation_space)
-
 
 #state_space = env.observation_space #Format: Box(250, 160, 3)
 #action_space = env.action_space #Format: Discrete(3)
@@ -33,8 +31,12 @@ action=2 -> going left
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 
+reward_list = []
 
-for ep in range(1):
+
+for ep in range(1000):
+
+    print(ep)
 
     total_reward = 0
     steps_in_ep = 0
@@ -65,10 +67,15 @@ for ep in range(1):
             agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)
             agent.experience_replay()
 
-        print(agent.Q.predict(agent.state)[0])
+        #print(agent.Q.predict(agent.state)[0])
 
-        env.render()
+        #env.render()
 
         total_reward += reward
         steps_in_ep += 1
         agent.previous_state = agent.state
+
+    reward_list.append(total_reward)
+
+reward_list = np.array(reward_list)
+np.savetxt("rewards",reward_list)
