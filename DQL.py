@@ -84,12 +84,15 @@ class DQL_agent():
                     target=reward
                 else:
                     #When predicting, predict returns [[proba1,proba2,proba3]]
-                    target = reward + self.gamma*np.amax(self.Q.predict(state_t)[0])
+                    target = reward + self.gamma*np.amax(self.Q.predict(state_t1)[0])
+
+                print(target)
+                # When predicting, predict returns [[proba1,proba2,proba3]]
                 target_f = self.Q.predict(state_t1)[0]
                 target_f[action] = target
-                print(state_t.shape)
-                print(target_f.shape)
-                self.Q.fit(state_t,target, epochs=1, verbose=1)
+                target_f = np.array(target_f)
+                self.Q.fit(state_t,target_f.reshape((1,3)), epochs=1, verbose=1)
+                self.batch_learning = 0
 
 
     def act(self,state):
