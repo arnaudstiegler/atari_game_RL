@@ -16,12 +16,11 @@
       <file leaf-file-name="DQL.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DQL.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="94" column="39" lean-forward="false" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
+            <state relative-caret-position="-55">
+              <caret line="43" column="31" lean-forward="false" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
-                <element signature="e#1398#1499#0" expanded="false" />
-                <element signature="e#3529#4226#0" expanded="false" />
+                <element signature="e#1399#1500#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -30,7 +29,7 @@
       <file leaf-file-name="run_atari.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_atari.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
+            <state relative-caret-position="728">
               <caret line="67" column="14" lean-forward="false" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -208,8 +207,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#1398#1499#0" expanded="false" />
-            <element signature="e#3529#4226#0" expanded="false" />
+            <element signature="e#1399#1500#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -220,8 +218,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#1398#1499#0" expanded="false" />
-            <element signature="e#3529#4226#0" expanded="false" />
+            <element signature="e#1399#1500#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -246,19 +243,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DQL.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="94" column="39" lean-forward="false" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
+        <state relative-caret-position="-55">
+          <caret line="43" column="31" lean-forward="false" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#1398#1499#0" expanded="false" />
-            <element signature="e#3529#4226#0" expanded="false" />
+            <element signature="e#1399#1500#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/run_atari.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
+        <state relative-caret-position="728">
           <caret line="67" column="14" lean-forward="false" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />

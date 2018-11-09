@@ -37,7 +37,7 @@ class DQL_agent():
         self.initial_move = True
 
         #Max number of steps between two experience replays
-        self.experience_nb_steps=100
+        self.experience_nb_steps=1000
         #Size of a batch for experience replay
         self.experience_batch_size = 50
         #A counter of the number of steps since last experience replay
@@ -70,7 +70,7 @@ class DQL_agent():
 
 
     def experience_replay(self):
-        if(self.batch_learning == self.experience_nb_steps):
+        if(self.batch_learning % self.experience_nb_steps==0):
             batch = random.sample(self.D, self.experience_batch_size)
 
             for i in range(0, len(batch)):
@@ -92,7 +92,7 @@ class DQL_agent():
                 target_f[action] = target
                 target_f = np.array(target_f)
                 self.Q.fit(state_t,target_f.reshape((1,3)), epochs=1, verbose=1)
-                self.batch_learning = 0
+
 
 
     def act(self,state):
