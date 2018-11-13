@@ -47,6 +47,7 @@ reward_list = []
 #TODO: implement periodical backup of reward and weights of the neural network
 #TODO: implement a way of saving the weights form keras
 #TODO: implement a function to load weights and do some runs without learning
+#TODO: render into agent class
 
 for ep in range(50):
 
@@ -70,7 +71,7 @@ for ep in range(50):
             action = agent.act(state)
             new_state, reward, done, _info = env.step(action)
             agent.state = process_obs(new_state)
-            env.render()
+            #env.render()
             agent.initial_move = False
 
         elif(agent.observe_phase):
@@ -94,7 +95,7 @@ for ep in range(50):
 
         #print(agent.Q.predict(agent.state)[0])
 
-        env.render()
+        #env.render()
 
         total_reward += reward
         steps_in_ep += 1
