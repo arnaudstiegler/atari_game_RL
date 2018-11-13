@@ -34,7 +34,7 @@ agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 reward_list = []
 
 
-for ep in range(1000):
+for ep in range(100):
 
     print(ep)
 
