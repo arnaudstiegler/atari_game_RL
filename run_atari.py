@@ -56,7 +56,7 @@ for ep in range(1000):
             action = agent.act(state)
             new_state, reward, done, _info = env.step(action)
             agent.state = process_obs(new_state)
-            env.render()
+            #env.render()
             agent.initial_move = False
 
         else:
