@@ -1,6 +1,7 @@
 import gym
 import numpy as np
 import DQL
+import timeit
 from utils import process_obs
 
 env_to_use = 'Skiing-v0'
@@ -51,7 +52,8 @@ reward_list = []
 
 for ep in range(50):
 
-    print(ep)
+    print("---- Currently running episode " +str(ep))
+    start = timeit.default_timer()
 
     total_reward = 0
     steps_in_ep = 0
@@ -108,5 +110,9 @@ for ep in range(50):
     #We backup the rewards
     np.savetxt("rewards", reward_list)
 
+    end = timeit.default_timer()
+    print("Episode took " + str((end-start)) + " seconds")
+
 reward_list = np.array(reward_list)
+agent.Q.save_weights('my_model_weights.h5')
 np.savetxt("rewards",reward_list)
