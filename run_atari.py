@@ -103,5 +103,10 @@ for ep in range(50):
 
     reward_list.append(total_reward)
 
+    #We backup the weights
+    agent.Q.save_weights('my_model_weights.h5')
+    #We backup the rewards
+    np.savetxt("rewards", reward_list)
+
 reward_list = np.array(reward_list)
 np.savetxt("rewards",reward_list)
