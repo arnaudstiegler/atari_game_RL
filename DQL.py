@@ -23,7 +23,7 @@ class DQL_agent():
         self.gamma = 0.95
 
         #Memory replay parameters
-        self.memory_size = 2000
+        self.memory_size = 10000
         # Format of an experience is: (state,previous_state,action,reward)
         self.D = deque([],self.memory_size)
 
@@ -37,17 +37,19 @@ class DQL_agent():
         self.action = None
         self.reward = None
         self.initial_move = True
+        self.observe_phase = True
 
         #Max number of steps between two experience replays
-        self.experience_nb_steps=1000
+        self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
-        self.experience_batch_size = 100
+        self.experience_batch_size = 32
         #A counter of the number of steps since last experience replay
-        self.batch_learning = 0
+        self.number_steps_done = 0
 
     def reinitialize_agent(self):
+        #This function is actually useless
         self.initial_move = True
-        self.batch_learning = 0
+        self.number_steps_done = 0
         self.D = deque([], self.memory_size)
 
     def _build_model(self):
@@ -72,7 +74,9 @@ class DQL_agent():
 
 
     def experience_replay(self):
-        if(self.batch_learning % self.experience_nb_steps==0):
+        #if(self.batch_learning % self.experience_nb_steps==0 and self.batch_learning >= self.experience_batch_size):
+        if(self.number_steps_done > self.experience_batch_size):
+
             batch = random.sample(self.D, self.experience_batch_size)
 
             for i in range(0, len(batch)):
@@ -121,7 +125,7 @@ class DQL_agent():
             new_action = np.argmax(q_values)
 
         #We have done an additional step
-        self.batch_learning += 1
+        self.number_steps_done += 1
         return new_action
 
 
