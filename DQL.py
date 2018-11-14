@@ -86,6 +86,9 @@ class DQL_agent():
                 reward = batch[i][3]
                 done = batch[i][4]
 
+                '''
+                OLD VERSION
+                
                 if(done):
                     target=reward
                 else:
@@ -96,7 +99,17 @@ class DQL_agent():
                 target_f = self.Q.predict(state_t1)[0]
                 target_f[action] = target
                 target_f = np.array(target_f)
-                self.Q.fit(state_t,target_f.reshape((1,3)), epochs=1, verbose=0)
+                '''
+
+                target = reward
+                if not done:
+                    Q_next = self.Q.predict(state_t1)[0]
+                    target = (reward + self.gamma * np.amax(Q_next))
+
+                target_f = self.Q.predict(state_t)
+                target_f[0][action] = target
+
+                self.Q.fit(state_t,target_f.reshape((1,3)), epochs=1, verbose=1)
 
             if(self.epsilon > self.final_epsilon):
                 self.epsilon = self.epsilon*self.epsilon_decay
