@@ -42,13 +42,10 @@ action=2 -> going left
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 agent.Q.load_weights('my_model_weights.h5')
+agent.epsilon=0.0
 reward_list = []
 
 
-#TODO: implement periodical backup of reward and weights of the neural network
-#TODO: implement a way of saving the weights form keras
-#TODO: implement a function to load weights and do some runs without learning
-#TODO: render into agent class
 
 for ep in range(50):
 
@@ -106,7 +103,7 @@ for ep in range(50):
     reward_list.append(total_reward)
 
     #We backup the weights
-    agent.Q.save_weights('my_model_weights.h5')
+    agent.Q.save_weights('dqn_1.h5')
     #We backup the rewards
     np.savetxt("rewards", reward_list)
 
@@ -114,5 +111,5 @@ for ep in range(50):
     print("Episode took " + str((end-start)) + " seconds")
 
 reward_list = np.array(reward_list)
-agent.Q.save_weights('my_model_weights.h5')
+agent.Q.save_weights('dqn_1.h5')
 np.savetxt("rewards",reward_list)
