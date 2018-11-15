@@ -19,7 +19,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 5000
+        self.explore = 50000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.001
 
@@ -116,7 +116,7 @@ class DQL_agent():
                 target_f = self.Q.predict(state_t)
                 target_f[0][action] = target
 
-                self.Q.fit(state_t,target_f.reshape((1,3)), epochs=1, verbose=0)
+                self.Q.fit(state_t,target_f.reshape((1,self.action_space)), epochs=1, verbose=0)
 
             if(self.epsilon > self.final_epsilon):
                 self.epsilon += self.epsilon_decay

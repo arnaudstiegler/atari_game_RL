@@ -5,12 +5,12 @@ import timeit
 from utils import process_obs
 import skimage
 
-env_to_use = 'Skiing-v0'
+env_to_use = 'TimePilot-v0'
 
 # game parameters
 env = gym.make(env_to_use)
-env._max_episode_steps = 1000
-
+#env._max_episode_steps = 1000
+#print(env.action_space)
 
 '''
 
@@ -26,17 +26,18 @@ To adress that, we will set it at 1000
 #action_space = env.action_space #Format: Discrete(3)
 
 state_space = 250,160,3
-action_space = 3
+action_space = 10
 
 
 '''
 
 env.step() -> returns array (state,reward,done?,_info)
 
-Action State:
-action=0 -> going straight
-action=1 -> going right
-action=2 -> going left
+Action State for Time pilot
+action=1 -> going straight
+action=2 -> going up no fire
+action=3 -> going right no fire
+action=4 -> going left no fire
 '''
 
 #We initialize our agent
