@@ -45,7 +45,7 @@ action=4 -> going left no fire
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 
 reward_list = []
-
+eps_length_list = []
 
 
 #TODO: render into agent class
@@ -136,18 +136,20 @@ for ep in range(70):
         s_t = s_t1
         agent.previous_state = s_t1
 
-    print(total_reward)
-    print(agent.epsilon)
+    print("total reward: " + str(total_reward))
+    print("total number of steps: " + str(steps_in_ep))
+    print("agent epsilon: " + str(agent.epsilon))
     reward_list.append(total_reward)
+    eps_length_list.append(steps_in_ep)
 
     #We backup the weights
-    agent.Q.save_weights('dqn_1.h5')
+    agent.Q.save_weights('dqn.h5')
     #We backup the rewards
     np.savetxt("rewards", reward_list)
+    np.savetxt("steps", eps_length_list)
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")
 
-reward_list = np.array(reward_list)
 agent.Q.save_weights('dqn.h5')
-np.savetxt("rewards",reward_list)
+
