@@ -65,10 +65,16 @@ for ep in range(70):
     # Initial state
     obs = env.reset() #Observation is array (250, 160, 3)
 
+    x_t = skimage.color.rgb2gray(obs)
+    x_t = skimage.transform.resize(x_t, (80, 80))
+    x_t = skimage.exposure.rescale_intensity(x_t, out_range=(0, 255))
 
-    state = process_obs(obs)#to create a batch with only one observation
+    x_t = x_t.reshape( 1, x_t.shape[0], x_t.shape[1])
+
+    s_t = np.stack((x_t, x_t, x_t, x_t), axis=1)
 
 
+    #state = process_obs(obs)#to create a batch with only one observation
     done=False
 
     #Max number of rounds for one episode
@@ -76,40 +82,61 @@ for ep in range(70):
 
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
-            action = agent.act(state)
+            action = agent.act(s_t)
             new_state, reward, done, _info = env.step(action)
-            agent.state = process_obs(new_state)
+            x_t1 = skimage.color.rgb2gray(new_state)
+            x_t1 = skimage.transform.resize(x_t1, (80, 80))
+            x_t1 = skimage.exposure.rescale_intensity(x_t1, out_range=(0, 255))
+
+            x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
+            s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
+            agent.state = s_t1
             #env.render()
             agent.initial_move = False
-
-
 
         elif(agent.observe_phase):
             #While we observe, we do not want to do replay_memory
             # take step
-            action = agent.act(state)
+            action = agent.act(s_t)
             new_state, reward, done, _info = env.step(action)
-            agent.state = process_obs(new_state)
-            agent.add_to_memory(agent.state, agent.previous_state, action, reward, done)
-            if(agent.number_steps_done > 5000):
-                agent.observe_phase = False
+            x_t1 = skimage.color.rgb2gray(new_state)
+            x_t1 = skimage.transform.resize(x_t1, (80, 80))
+            x_t1 = skimage.exposure.rescale_intensity(x_t1, out_range=(0, 255))
 
+            x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
+            s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
+
+            agent.state = s_t1
+            agent.add_to_memory(agent.state, agent.previous_state, action, reward, done)
+            if(agent.number_steps_done > agent.observe_steps):
+                agent.observe_phase = False
 
         else:
             # take step
-            action = agent.act(state)
+            action = agent.act(s_t)
             new_state,reward,done,_info = env.step(action)
-            agent.state = process_obs(new_state)
+            x_t1 = skimage.color.rgb2gray(new_state)
+            x_t1 = skimage.transform.resize(x_t1, (80, 80))
+            x_t1 = skimage.exposure.rescale_intensity(x_t1, out_range=(0, 255))
+
+            x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
+            s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
+            agent.state = s_t1
             agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)
             agent.experience_replay()
+
+
 
 
         #env.render()
 
         total_reward += reward
         steps_in_ep += 1
-        agent.previous_state = agent.state
+        s_t = s_t1
+        agent.previous_state = s_t1
 
+    print(total_reward)
+    print(agent.epsilon)
     reward_list.append(total_reward)
 
     #We backup the weights
