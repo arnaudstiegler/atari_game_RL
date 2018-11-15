@@ -74,7 +74,7 @@ class DQL_agent():
         model.add(Flatten())
         model.add(Dense(256,kernel_initializer=init))
         model.add(Activation('relu'))
-        model.add(Dense(3,activation='linear',kernel_initializer=init))
+        model.add(Dense(self.action_space,activation='linear',kernel_initializer=init))
         adam = Adam(lr=self.learning_rate_cnn)
         model.compile(loss='mse', optimizer=adam)
         return model
