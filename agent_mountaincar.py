@@ -19,7 +19,7 @@ class mcar_agent():
         # Learning parameters
         self.epsilon = 1.0
         # Number of time steps over which the agent will explore
-        self.explore = 25000
+        self.explore = 200000
         # Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.001
 
@@ -42,7 +42,7 @@ class mcar_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 20000  # Number of steps for observation (no learning)
+        self.observe_steps = 200000  # Number of steps for observation (no learning)
 
 
         # Max number of steps between two experience replays
@@ -62,7 +62,7 @@ class mcar_agent():
 
         init = random_normal(mean=0.0, stddev=0.05, seed=None)
         model = Sequential()
-        model.add(Dense(64, input_shape=(1,), activation='relu',kernel_initializer=init))
+        model.add(Dense(64, input_shape=(2,), activation='relu',kernel_initializer=init))
         model.add(Dense(32, activation='relu',kernel_initializer=init))
         model.add(Dense(self.action_space, activation='linear', kernel_initializer=init))
         adam = Adam(lr=self.learning_rate_cnn)
@@ -137,3 +137,36 @@ class mcar_agent():
 
     def add_to_memory(self, state, previous_state, action, reward, done):
         self.D.append([state, previous_state, action, reward, done])
+
+    def check_learning(self,env):
+        if(self.time_steps % 100000 == 0 ): #As for the deepmind paper, one epoch corresponds to 50000 timesteps
+            print('---- CHECKING RESULTS ----')
+            epsilon = self.epsilon
+            self.epsilon = 0.05
+
+            rewards = []
+
+            for ep in range(50):
+
+                s_t = env.reset()
+                done=False
+                reward_tot = 0
+
+                while(done==False):
+                    # If it is the first move, we can't store anything in the memory
+                    action = self.act(s_t.reshape((1, 2)))
+                    s_t1, reward, done, _info = env.step(action)
+                    self.state = s_t1.reshape((1, 2))
+                    #self.add_to_memory(self.state, self.previous_state, action, reward, done)
+                    reward_tot +=reward
+
+                rewards.append(reward_tot)
+
+            with open('mountain_car/epoch_rewards.txt','a') as file:
+                file.write(str(np.mean(rewards))+'\n')
+
+            self.epsilon = epsilon
+
+            return True
+        else:
+            return False
