@@ -52,6 +52,8 @@ eps_length_list = []
 #TODO: Check all parameters for Network/Learning
 #TODO: Check reward
 #TODO: Check TD target
+#TODO: add epochs count
+#TODO: add performance testing after each epoch
 
 for ep in range(70):
 

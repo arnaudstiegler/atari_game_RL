@@ -11,4 +11,3 @@ def process_obs(observation):
     s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
     return observation.reshape((1,250, 160,3))
 
-obs = np.load('obs.npy')
