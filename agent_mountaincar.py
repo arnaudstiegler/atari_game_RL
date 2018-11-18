@@ -19,20 +19,20 @@ class mcar_agent():
         # Learning parameters
         self.epsilon = 1.0
         # Number of time steps over which the agent will explore
-        self.explore = 200000
+        self.explore = 20000
         # Final value for epsilon (once exploration is finished)
-        self.final_epsilon = 0.001
+        self.final_epsilon = 0.01
 
         self.epsilon_decay = (self.final_epsilon - self.epsilon) / (self.explore)
-        self.gamma = 0.95
+        self.gamma = 0.99
 
         # Memory replay parameters
-        self.memory_size = 50000
+        self.memory_size = 100000
         # Format of an experience is: (state,previous_state,action,reward)
         self.D = deque([], self.memory_size)
 
         # Parameters for the MLP
-        self.learning_rate_cnn = 0.001
+        self.learning_rate_cnn = 0.0005
         self.Q = self._build_model()
 
         # Parameters for the ongoing episode
@@ -42,7 +42,7 @@ class mcar_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 200000  # Number of steps for observation (no learning)
+        self.observe_steps = 10000  # Number of steps for observation (no learning)
 
 
         # Max number of steps between two experience replays
@@ -62,8 +62,8 @@ class mcar_agent():
 
         init = random_normal(mean=0.0, stddev=0.05, seed=None)
         model = Sequential()
-        model.add(Dense(64, input_shape=(2,), activation='relu',kernel_initializer=init))
-        model.add(Dense(32, activation='relu',kernel_initializer=init))
+        model.add(Dense(32, input_shape=(self.state_space,), activation='relu',kernel_initializer=init))
+        model.add(Dense(16, activation='relu',kernel_initializer=init))
         model.add(Dense(self.action_space, activation='linear', kernel_initializer=init))
         adam = Adam(lr=self.learning_rate_cnn)
         model.compile(loss='mse', optimizer=adam)
@@ -71,7 +71,7 @@ class mcar_agent():
 
     def experience_replay(self):
         # if(self.batch_learning % self.experience_nb_steps==0 and self.batch_learning >= self.experience_batch_size):
-        if (self.time_steps > self.experience_batch_size):
+        if (self.time_steps > self.experience_batch_size and len(self.D)>self.experience_batch_size):
 
             batch = random.sample(self.D, self.experience_batch_size)
 
@@ -138,8 +138,8 @@ class mcar_agent():
     def add_to_memory(self, state, previous_state, action, reward, done):
         self.D.append([state, previous_state, action, reward, done])
 
-    def check_learning(self,env):
-        if(self.time_steps % 100000 == 0 ): #As for the deepmind paper, one epoch corresponds to 50000 timesteps
+    def check_learning(self,env,ep):
+        if(ep % 25 == 0 ):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
             self.epsilon = 0.05
@@ -154,11 +154,14 @@ class mcar_agent():
 
                 while(done==False):
                     # If it is the first move, we can't store anything in the memory
-                    action = self.act(s_t.reshape((1, 2)))
+                    action = self.act(s_t.reshape((1, self.state_space)))
                     s_t1, reward, done, _info = env.step(action)
-                    self.state = s_t1.reshape((1, 2))
+                    self.state = s_t1.reshape((1, self.state_space))
                     #self.add_to_memory(self.state, self.previous_state, action, reward, done)
                     reward_tot +=reward
+
+                    s_t = s_t1
+                    self.previous_state = s_t1.reshape((1, self.state_space))
 
                 rewards.append(reward_tot)
 
