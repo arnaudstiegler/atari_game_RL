@@ -91,7 +91,7 @@ for ep in range(70):
             new_state, reward, done, _info = env.step(action)
             agent.state = process_obs(new_state)
             agent.add_to_memory(agent.state, agent.previous_state, action, reward, done)
-            if(agent.number_steps_done > 5000):
+            if(agent.time_steps > 5000):
                 agent.observe_phase = False
 
 

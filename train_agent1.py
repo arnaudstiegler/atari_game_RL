@@ -9,7 +9,7 @@ env_to_use = 'Skiing-v0'
 
 # game parameters
 env = gym.make(env_to_use)
-#env._max_episode_steps = 1000
+env._max_episode_steps = 1000
 #print(env.action_space)
 
 '''
@@ -163,5 +163,5 @@ while(True):
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")
 
-agent.Q.save_weights('dqn.h5')
+agent.Q.save_weights('skiing/dqn.h5')
 

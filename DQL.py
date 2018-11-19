@@ -42,19 +42,19 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 20000 #Number of steps for observation (no learning)
+        self.observe_steps = 200000 #Number of steps for observation (no learning)
 
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
         self.experience_batch_size = 32
         #A counter of the number of steps since last experience replay
-        self.number_steps_done = 0
+        self.time_steps = 0
 
     def reinitialize_agent(self):
         #This function is actually useless
         self.initial_move = True
-        self.number_steps_done = 0
+        self.time_steps = 0
         self.D = deque([], self.memory_size)
 
     def _build_model(self):
@@ -82,7 +82,7 @@ class DQL_agent():
 
     def experience_replay(self):
         #if(self.batch_learning % self.experience_nb_steps==0 and self.batch_learning >= self.experience_batch_size):
-        if(self.number_steps_done > self.experience_batch_size):
+        if(self.time_steps > self.experience_batch_size):
 
             batch = random.sample(self.D, self.experience_batch_size)
 
@@ -145,7 +145,7 @@ class DQL_agent():
             new_action = np.argmax(q_values)
 
         #We have done an additional step
-        self.number_steps_done += 1
+        self.time_steps += 1
         return new_action
 
 
@@ -163,11 +163,11 @@ class DQL_agent():
 
             rewards = []
 
-            for ep in range(50):
+            for ep in range(20):
 
                 obs = env.reset()
                 done=False
-                reward_tot = 0
+                total_reward = 0
 
                 x_t = skimage.color.rgb2gray(obs)
                 x_t = skimage.transform.resize(x_t, (80, 80))
@@ -189,8 +189,11 @@ class DQL_agent():
                     x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
                     s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
                     self.state = s_t1
+                    total_reward += reward
 
-                rewards.append(reward_tot)
+
+                rewards.append(total_reward)
+                print(total_reward)
 
             with open('skiing/epoch_rewards.txt','a') as file:
                 file.write(str(np.mean(rewards))+'\n')

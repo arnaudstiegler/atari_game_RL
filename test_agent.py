@@ -112,7 +112,7 @@ for ep in range(100):
 
             agent.state = s_t1
             #agent.add_to_memory(agent.state, agent.previous_state, action, reward, done)
-            if(agent.number_steps_done > agent.observe_steps):
+            if(agent.time_steps > agent.observe_steps):
                 agent.observe_phase = False
 
         else:
