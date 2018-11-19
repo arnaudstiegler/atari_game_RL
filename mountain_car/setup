@@ -1,0 +1,17 @@
+# Learning parameters
+        self.epsilon = 1.0
+        # Number of time steps over which the agent will explore
+        self.explore = 250000
+        # Final value for epsilon (once exploration is finished)
+        self.final_epsilon = 0.01
+
+        self.epsilon_decay = (self.final_epsilon - self.epsilon) / (self.explore)
+        self.gamma = 0.99
+
+        # Memory replay parameters
+        self.memory_size = 100000
+        # Format of an experience is: (state,previous_state,action,reward)
+        self.D = deque([], self.memory_size)
+
+        # Parameters for the MLP
+        self.learning_rate_cnn = 0.0001
