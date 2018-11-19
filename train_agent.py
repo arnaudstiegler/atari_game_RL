@@ -60,7 +60,7 @@ for ep in range(70):
     total_reward = 0
     steps_in_ep = 0
 
-    #agent.reinitialize_agent()
+
 
     # Initial state
     obs = env.reset() #Observation is array (250, 160, 3)

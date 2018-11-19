@@ -5,7 +5,7 @@ import timeit
 from utils import process_obs
 import skimage
 
-env_to_use = 'TimePilot-v0'
+env_to_use = 'Skiing-v0'
 
 # game parameters
 env = gym.make(env_to_use)
@@ -22,11 +22,14 @@ To adress that, we will set it at 1000
 
 
 
-#state_space = env.observation_space #Format: Box(250, 160, 3)
-#action_space = env.action_space #Format: Discrete(3)
+state_space = env.observation_space #Format: Box(250, 160, 3)
+action_space = env.action_space #Format: Discrete(3)
+
+#print(state_space)
+#print(action_space)
 
 state_space = 250,160,3
-action_space = 10
+action_space = 3
 
 
 '''
@@ -55,15 +58,23 @@ eps_length_list = []
 #TODO: add epochs count
 #TODO: add performance testing after each epoch
 
-for ep in range(70):
+ep = 0
+
+while(True):
 
     print("---- Currently running episode " +str(ep))
     start = timeit.default_timer()
+
+    print('epsilon value: ' + str(agent.epsilon))
 
     total_reward = 0
     steps_in_ep = 0
 
     #agent.reinitialize_agent()
+
+    agent.check_learning(env, ep)  # Returns false if the check is not processed
+
+    done = False
 
     # Initial state
     obs = env.reset() #Observation is array (250, 160, 3)
@@ -72,13 +83,12 @@ for ep in range(70):
     x_t = skimage.transform.resize(x_t, (80, 80))
     x_t = skimage.exposure.rescale_intensity(x_t, out_range=(0, 255))
 
-    x_t = x_t.reshape( 1, x_t.shape[0], x_t.shape[1])
+    x_t = x_t.reshape(1, x_t.shape[0], x_t.shape[1])
 
     s_t = np.stack((x_t, x_t, x_t, x_t), axis=1)
 
 
-    #state = process_obs(obs)#to create a batch with only one observation
-    done=False
+
 
     #Max number of rounds for one episode
     while(done is False):
@@ -111,8 +121,9 @@ for ep in range(70):
 
             agent.state = s_t1
             agent.add_to_memory(agent.state, agent.previous_state, action, reward, done)
-            if(agent.number_steps_done > agent.observe_steps):
+            if (agent.time_steps > agent.observe_steps):
                 agent.observe_phase = False
+                print("--- END OBSERVE PHASE ---")
 
         else:
             # take step
@@ -146,9 +157,8 @@ for ep in range(70):
 
     #We backup the weights
     agent.Q.save_weights('dqn.h5')
-    #We backup the rewards
-    np.savetxt("rewards", reward_list)
-    np.savetxt("steps", eps_length_list)
+
+    ep+=1
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")

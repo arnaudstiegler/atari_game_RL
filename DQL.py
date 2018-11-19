@@ -6,7 +6,7 @@ from keras.models import Sequential
 from keras.optimizers import Adam
 from keras.losses import binary_crossentropy,mean_squared_error
 from keras.initializers import random_normal
-
+import skimage
 
 class DQL_agent():
 
@@ -153,3 +153,51 @@ class DQL_agent():
 
     def add_to_memory(self,state,previous_state,action,reward,done):
         self.D.append([state,previous_state,action,reward,done])
+
+
+    def check_learning(self,env,ep):
+        if(ep % 25 == 0 ):
+            print('---- CHECKING RESULTS ----')
+            epsilon = self.epsilon
+            self.epsilon = 0.05
+
+            rewards = []
+
+            for ep in range(50):
+
+                obs = env.reset()
+                done=False
+                reward_tot = 0
+
+                x_t = skimage.color.rgb2gray(obs)
+                x_t = skimage.transform.resize(x_t, (80, 80))
+                x_t = skimage.exposure.rescale_intensity(x_t, out_range=(0, 255))
+
+                x_t = x_t.reshape(1, x_t.shape[0], x_t.shape[1])
+
+                s_t = np.stack((x_t, x_t, x_t, x_t), axis=1)
+
+
+                while(done==False):
+                    # If it is the first move, we can't store anything in the memory
+                    action = self.act(s_t)
+                    new_state, reward, done, _info = env.step(action)
+                    x_t1 = skimage.color.rgb2gray(new_state)
+                    x_t1 = skimage.transform.resize(x_t1, (80, 80))
+                    x_t1 = skimage.exposure.rescale_intensity(x_t1, out_range=(0, 255))
+
+                    x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
+                    s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
+                    self.state = s_t1
+
+                rewards.append(reward_tot)
+
+            with open('skiing/epoch_rewards.txt','a') as file:
+                file.write(str(np.mean(rewards))+'\n')
+
+
+            self.epsilon = epsilon
+
+            return True
+        else:
+            return False

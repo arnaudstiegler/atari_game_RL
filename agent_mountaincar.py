@@ -19,7 +19,7 @@ class mcar_agent():
         # Learning parameters
         self.epsilon = 1.0
         # Number of time steps over which the agent will explore
-        self.explore = 50000
+        self.explore = 20000
         # Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.01
 
@@ -32,7 +32,7 @@ class mcar_agent():
         self.D = deque([], self.memory_size)
 
         # Parameters for the MLP
-        self.learning_rate_cnn = 0.0001
+        self.learning_rate_cnn = 0.01
         self.Q = self._build_model()
 
         # Parameters for the ongoing episode
