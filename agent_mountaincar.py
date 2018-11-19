@@ -19,7 +19,7 @@ class mcar_agent():
         # Learning parameters
         self.epsilon = 1.0
         # Number of time steps over which the agent will explore
-        self.explore = 80000
+        self.explore = 50000
         # Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.01
 
