@@ -93,6 +93,14 @@ while(True):
             action = agent.act(s_t.reshape((1,state_space)))
             s_t1, reward, done, _info = env.step(action)
             agent.state = s_t1.reshape((1,state_space))
+
+            # Adjust reward based on car position
+            reward = s_t1[0] + 0.5
+
+            # Adjust reward for task completion
+            if s_t1[0] >= 0.5:
+                reward += 1
+
             agent.add_to_memory(agent.state, agent.previous_state, action, reward, done)
             if(agent.time_steps > agent.observe_steps):
                 agent.observe_phase = False
@@ -103,6 +111,14 @@ while(True):
             action = agent.act(s_t.reshape((1,state_space)))
             s_t1,reward,done,_info = env.step(action)
             agent.state = s_t1.reshape((1,state_space))
+
+            # Adjust reward based on car position
+            reward = s_t1[0] + 0.5
+
+            # Adjust reward for task completion
+            if s_t1[0] >= 0.5:
+                reward += 1
+
             agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)
             agent.experience_replay()
 

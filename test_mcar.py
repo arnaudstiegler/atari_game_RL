@@ -4,7 +4,7 @@ import agent_mountaincar
 import timeit
 
 
-env_to_use = 'CartPole-v1'
+env_to_use = 'MountainCar-v0'
 
 # game parameters
 env = gym.make(env_to_use)
@@ -24,8 +24,8 @@ To adress that, we will set it at 1000
 #state_space = env.observation_space #Format: Box(250, 160, 3)
 #action_space = env.action_space #Format: Discrete(3)
 
-state_space = 4
-action_space = 2
+state_space = 2
+action_space = 3
 
 
 '''
@@ -42,7 +42,7 @@ action=4 -> going left no fire
 #We initialize our agent
 
 agent = agent_mountaincar.mcar_agent(state_space= state_space, action_space= action_space)
-agent.Q.load_weights('mountain_car/dqn.h5')
+#agent.Q.load_weights('mountain_car/dqn.h5')
 agent.epsilon=0.0
 agent.explore = 1000000000
 
@@ -55,7 +55,7 @@ eps_length_list = []
 #TODO: Check reward
 #TODO: Check TD target
 
-for ep in range(100):
+for ep in range(100000):
 
     agent.check_learning(env, ep)
 
