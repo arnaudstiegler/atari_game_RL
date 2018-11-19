@@ -19,7 +19,7 @@ class mcar_agent():
         # Learning parameters
         self.epsilon = 1.0
         # Number of time steps over which the agent will explore
-        self.explore = 250000
+        self.explore = 150000
         # Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.01
 
@@ -151,6 +151,7 @@ class mcar_agent():
                 s_t = env.reset()
                 done=False
                 reward_tot = 0
+                max_val_reached = -1.2
 
                 while(done==False):
                     # If it is the first move, we can't store anything in the memory
@@ -158,7 +159,16 @@ class mcar_agent():
                     s_t1, reward, done, _info = env.step(action)
                     self.state = s_t1.reshape((1, self.state_space))
                     #self.add_to_memory(self.state, self.previous_state, action, reward, done)
+                    # Adjust reward based on car position
+                    reward = s_t1[0] + 0.5
+
+                    # Adjust reward for task completion
+                    if s_t1[0] >= 0.5:
+                        reward += 1
                     reward_tot +=reward
+
+                    if(s_t1[0] > max_val_reached):
+                        max_val_reached = s_t1[0]
 
                     s_t = s_t1
                     self.previous_state = s_t1.reshape((1, self.state_space))
@@ -167,6 +177,9 @@ class mcar_agent():
 
             with open('mountain_car/epoch_rewards.txt','a') as file:
                 file.write(str(np.mean(rewards))+'\n')
+
+            with open('mountain_car/val_reached.txt','a') as file:
+                file.write(str(max_val_reached)+'\n')
 
             self.epsilon = epsilon
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e680ec4f-bcda-414e-8346-4fc5784f3bff" name="Default" comment="" />
+    <list default="true" id="e680ec4f-bcda-414e-8346-4fc5784f3bff" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agent_mountaincar.py" afterPath="$PROJECT_DIR$/agent_mountaincar.py" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="train_mcar.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="train_mcar.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_mcar.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="50" column="18" lean-forward="false" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
+            <state relative-caret-position="244">
+              <caret line="88" column="0" lean-forward="true" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -23,14 +25,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="agent_mountaincar.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="agent_mountaincar.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/agent_mountaincar.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="39" lean-forward="false" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
+            <state relative-caret-position="344">
+              <caret line="170" column="48" lean-forward="false" selection-start-line="170" selection-start-column="48" selection-end-line="170" selection-end-column="48" />
               <folding>
                 <element signature="e#1#30#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setup" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mountain_car/setup">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -122,11 +134,13 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/mountain_car.py" />
         <option value="$PROJECT_DIR$/mountain_car/epoch_rewards" />
-        <option value="$PROJECT_DIR$/mountain_car/epoch_rewards.txt" />
         <option value="$PROJECT_DIR$/train_mcar.py" />
         <option value="$PROJECT_DIR$/test_mcar.py" />
         <option value="$PROJECT_DIR$/cartpole_v1/setup" />
+        <option value="$PROJECT_DIR$/mountain_car/setup" />
         <option value="$PROJECT_DIR$/agent_mountaincar.py" />
+        <option value="$PROJECT_DIR$/mountain_car/epoch_rewards.txt" />
+        <option value="$PROJECT_DIR$/mountain_car/val_reached.txt" />
       </list>
     </option>
   </component>
@@ -157,6 +171,11 @@
             <path>
               <item name="project_rl" type="b2602c69:ProjectViewProjectNode" />
               <item name="project_rl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project_rl" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project_rl" type="462c0819:PsiDirectoryNode" />
+              <item name="mountain_car" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -192,7 +211,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test_mcar">
+  <component name="RunManager" selected="Python.train_mcar">
     <configuration name="agent_mountaincar" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -287,8 +306,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.test_mcar" />
-        <item index="1" class="java.lang.String" itemvalue="Python.train_mcar" />
+        <item index="0" class="java.lang.String" itemvalue="Python.train_mcar" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test_mcar" />
         <item index="2" class="java.lang.String" itemvalue="Python.agent_mountaincar" />
         <item index="3" class="java.lang.String" itemvalue="Python.score" />
         <item index="4" class="java.lang.String" itemvalue="Python.test_agent" />
@@ -351,33 +370,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/train_agent1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2070">
-          <caret line="143" column="36" lean-forward="true" selection-start-line="143" selection-start-column="36" selection-end-line="143" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="4" lean-forward="false" selection-start-line="5" selection-start-column="4" selection-end-line="10" selection-end-column="52" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DQL.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1560">
@@ -679,16 +671,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cartpole_v1/epoch_rewards.txt" />
-    <entry file="file://$PROJECT_DIR$/train_mcar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="50" column="18" lean-forward="false" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cartpole_v1/setup">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -706,12 +688,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mountain_car/setup">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/agent_mountaincar.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="39" lean-forward="false" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
+        <state relative-caret-position="344">
+          <caret line="170" column="48" lean-forward="false" selection-start-line="170" selection-start-column="48" selection-end-line="170" selection-end-column="48" />
           <folding>
             <element signature="e#1#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mountain_car/epoch_rewards.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mountain_car/val_reached.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_mcar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="88" column="0" lean-forward="true" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
