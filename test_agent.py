@@ -4,6 +4,7 @@ import DQL
 import timeit
 from utils import process_obs
 import skimage
+import random
 
 env_to_use = 'Breakout-v0'
 
@@ -26,7 +27,7 @@ To adress that, we will set it at 1000
 #action_space = env.action_space #Format: Discrete(3)
 
 state_space = 250,160,3
-action_space = 10
+action_space = 4
 
 
 '''
@@ -44,7 +45,7 @@ action=4 -> going left no fire
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 agent.Q.load_weights('breakout/dqn.h5')
-agent.epsilon=0.0
+agent.epsilon=0.1
 agent.explore = 1000000000
 
 reward_list = []
@@ -86,7 +87,9 @@ for ep in range(100):
 
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
+
             action = agent.act(s_t)
+            print(action)
             new_state, reward, done, _info = env.step(action)
             x_t1 = skimage.color.rgb2gray(new_state)
             x_t1 = skimage.transform.resize(x_t1, (80, 80))
@@ -98,26 +101,12 @@ for ep in range(100):
             #env.render()
             agent.initial_move = False
 
-        elif(agent.observe_phase):
-            #While we observe, we do not want to do replay_memory
-            # take step
-            action = agent.act(s_t)
-            new_state, reward, done, _info = env.step(action)
-            x_t1 = skimage.color.rgb2gray(new_state)
-            x_t1 = skimage.transform.resize(x_t1, (80, 80))
-            x_t1 = skimage.exposure.rescale_intensity(x_t1, out_range=(0, 255))
 
-            x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
-            s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
-
-            agent.state = s_t1
-            #agent.add_to_memory(agent.state, agent.previous_state, action, reward, done)
-            if(agent.time_steps > agent.observe_steps):
-                agent.observe_phase = False
 
         else:
             # take step
             action = agent.act(s_t)
+            print(action)
             new_state,reward,done,_info = env.step(action)
             x_t1 = skimage.color.rgb2gray(new_state)
             x_t1 = skimage.transform.resize(x_t1, (80, 80))
@@ -132,7 +121,7 @@ for ep in range(100):
 
 
 
-        #env.render()
+        env.render()
 
         total_reward += reward
         steps_in_ep += 1
@@ -146,8 +135,8 @@ for ep in range(100):
     eps_length_list.append(steps_in_ep)
 
     #We backup the rewards
-    np.savetxt("rewards_dqn", reward_list)
-    np.savetxt("steps_dqn", eps_length_list)
+    #np.savetxt("rewards_dqn", reward_list)
+    #np.savetxt("steps_dqn", eps_length_list)
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")
