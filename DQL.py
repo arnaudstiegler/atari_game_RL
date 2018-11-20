@@ -27,12 +27,12 @@ class DQL_agent():
         self.gamma = 0.95
 
         #Memory replay parameters
-        self.memory_size = 50000
+        self.memory_size = 100000
         # Format of an experience is: (state,previous_state,action,reward)
         self.D = deque([],self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 0.000001
+        self.learning_rate_cnn = 0.0001
         self.Q = self._build_model()
 
         #Parameters for the ongoing episode
@@ -47,7 +47,7 @@ class DQL_agent():
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
-        self.experience_batch_size = 64
+        self.experience_batch_size = 32
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
 
@@ -82,7 +82,8 @@ class DQL_agent():
 
     def experience_replay(self):
         #if(self.batch_learning % self.experience_nb_steps==0 and self.batch_learning >= self.experience_batch_size):
-
+        print(len(self.D))
+        print(self.experience_batch_size+1)
         if(len(self.D) > self.experience_batch_size+1):
 
             batch = random.sample(self.D, self.experience_batch_size)
@@ -160,6 +161,7 @@ class DQL_agent():
         if(ep % 25 == 0 ):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
+            timesteps = self.time_steps
             self.epsilon = 0.05
 
             rewards = []
@@ -196,10 +198,10 @@ class DQL_agent():
                 rewards.append(total_reward)
                 print(total_reward)
 
-            with open('skiing/epoch_rewards.txt','a') as file:
+            with open('breakout/epoch_rewards.txt','a') as file:
                 file.write(str(np.mean(rewards))+'\n')
 
-
+            self.time_steps = timesteps
             self.epsilon = epsilon
 
             return True
