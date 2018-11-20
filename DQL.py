@@ -19,7 +19,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 25000
+        self.explore = 250000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.001
 
@@ -42,12 +42,12 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 200000 #Number of steps for observation (no learning)
+        self.observe_steps = 20000 #Number of steps for observation (no learning)
 
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
-        self.experience_batch_size = 32
+        self.experience_batch_size = 64
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
 
@@ -82,7 +82,8 @@ class DQL_agent():
 
     def experience_replay(self):
         #if(self.batch_learning % self.experience_nb_steps==0 and self.batch_learning >= self.experience_batch_size):
-        if(self.time_steps > self.experience_batch_size):
+
+        if(len(self.D) > self.experience_batch_size+1):
 
             batch = random.sample(self.D, self.experience_batch_size)
 
