@@ -5,7 +5,7 @@ import timeit
 from utils import process_obs
 import skimage
 
-env_to_use = 'TimePilot-v0'
+env_to_use = 'Breakout-v0'
 
 # game parameters
 env = gym.make(env_to_use)
@@ -43,7 +43,7 @@ action=4 -> going left no fire
 #We initialize our agent
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
-agent.Q.load_weights('dqn.h5')
+agent.Q.load_weights('breakout/dqn.h5')
 agent.epsilon=0.0
 agent.explore = 1000000000
 

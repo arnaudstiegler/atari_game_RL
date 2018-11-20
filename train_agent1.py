@@ -156,12 +156,12 @@ while(True):
     eps_length_list.append(steps_in_ep)
 
     #We backup the weights
-    agent.Q.save_weights('dqn.h5')
+    agent.Q.save_weights('breakout/dqn.h5')
 
     ep+=1
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")
 
-agent.Q.save_weights('skiing/dqn.h5')
+agent.Q.save_weights('breakout/dqn.h5')
 

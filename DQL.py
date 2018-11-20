@@ -19,12 +19,12 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 250000
+        self.explore = 100000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.001
 
         self.epsilon_decay = (self.final_epsilon - self.epsilon)/(self.explore)
-        self.gamma = 0.95
+        self.gamma = 0.99
 
         #Memory replay parameters
         self.memory_size = 100000
@@ -65,7 +65,7 @@ class DQL_agent():
         model = Sequential()
         model.add(Convolution2D(16, 8, 8, subsample=(4,4), border_mode='same', kernel_initializer=init,input_shape=(img_channels,img_rows,img_cols)))
         model.add(Activation('relu'))
-        model.add(Convolution2D(64, 3, 3, subsample=(2, 2), border_mode='same', kernel_initializer=init))
+        model.add(Convolution2D(32, 4, 4, subsample=(2, 2), border_mode='same', kernel_initializer=init))
         model.add(Activation('relu'))
         '''
         model.add(Convolution2D(64, 3, 3,strides=4, subsample=(1, 1), border_mode='same',kernel_initializer=init))
