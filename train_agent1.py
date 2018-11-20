@@ -142,7 +142,7 @@ while(True):
 
 
 
-        env.render()
+        #env.render()
 
         total_reward += reward
         steps_in_ep += 1

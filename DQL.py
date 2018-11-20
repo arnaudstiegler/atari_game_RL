@@ -21,7 +21,7 @@ class DQL_agent():
         #Number of time steps over which the agent will explore
         self.explore = 200000
         #Final value for epsilon (once exploration is finished)
-        self.final_epsilon = 0.001
+        self.final_epsilon = 0.05
 
         self.epsilon_decay = (self.final_epsilon - self.epsilon)/(self.explore)
         self.gamma = 0.99
@@ -47,7 +47,7 @@ class DQL_agent():
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
-        self.experience_batch_size = 32
+        self.experience_batch_size = 64
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
 
