@@ -81,9 +81,7 @@ class DQL_agent():
 
 
     def experience_replay(self):
-        #if(self.batch_learning % self.experience_nb_steps==0 and self.batch_learning >= self.experience_batch_size):
-        print(len(self.D))
-        print(self.experience_batch_size+1)
+
         if(len(self.D) > self.experience_batch_size+1):
 
             batch = random.sample(self.D, self.experience_batch_size)
