@@ -47,7 +47,7 @@ class DQL_agent():
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
-        self.experience_batch_size = 64
+        self.experience_batch_size = 32
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
 
@@ -62,21 +62,39 @@ class DQL_agent():
         img_channels, img_rows, img_cols = 4,80,80
 
         init = random_normal(mean=0.0, stddev=0.05, seed=None)
+        '''
         model = Sequential()
         model.add(Convolution2D(16, 8, 8, subsample=(4,4), border_mode='same', kernel_initializer=init,input_shape=(img_channels,img_rows,img_cols)))
         model.add(Activation('relu'))
         model.add(Convolution2D(32, 4, 4, subsample=(2, 2), border_mode='same', kernel_initializer=init))
         model.add(Activation('relu'))
-        '''
-        model.add(Convolution2D(64, 3, 3,strides=4, subsample=(1, 1), border_mode='same',kernel_initializer=init))
-        model.add(Activation('relu'))
-        '''
+    
+        #model.add(Convolution2D(64, 3, 3,strides=4, subsample=(1, 1), border_mode='same',kernel_initializer=init))
+        #model.add(Activation('relu'))
+        
         model.add(Flatten())
         model.add(Dense(256,kernel_initializer=init))
         model.add(Activation('relu'))
         model.add(Dense(self.action_space,activation='linear',kernel_initializer=init))
         adam = Adam(lr=self.learning_rate_cnn)
         model.compile(loss='mse', optimizer=adam)
+        '''
+        model = Sequential()
+        model.add(Convolution2D(32, 8, 8, subsample=(4, 4), border_mode='same',
+                                input_shape=(img_rows, img_cols,img_channels)))  # 80*80*4
+        model.add(Activation('relu'))
+        model.add(Convolution2D(64, 4, 4, subsample=(2, 2), border_mode='same'))
+        model.add(Activation('relu'))
+        model.add(Convolution2D(64, 3, 3, subsample=(1, 1), border_mode='same'))
+        model.add(Activation('relu'))
+        model.add(Flatten())
+        model.add(Dense(512))
+        model.add(Activation('relu'))
+        model.add(Dense(self.action_space))
+
+        adam = Adam(lr=self.learning_rate_cnn)
+        model.compile(loss='mse', optimizer=adam)
+
         return model
 
 
@@ -116,7 +134,7 @@ class DQL_agent():
                 target_f = self.Q.predict(state_t)
                 target_f[0][action] = target
 
-                self.Q.fit(state_t,target_f.reshape((1,self.action_space)), epochs=1, verbose=0)
+                self.Q.fit(state_t,target_f.reshape((1,self.action_space)), epochs=1, verbose=1)
 
             if(self.epsilon > self.final_epsilon):
                 self.epsilon += self.epsilon_decay
@@ -164,31 +182,55 @@ class DQL_agent():
 
             rewards = []
 
-            for ep in range(20):
+            for ep in range(1):
 
                 obs = env.reset()
                 done=False
                 total_reward = 0
 
+                '''
+                    x_t = skimage.color.rgb2gray(obs)
+                    x_t = skimage.transform.resize(x_t, (80, 80))
+                    x_t = skimage.exposure.rescale_intensity(x_t, out_range=(0, 255))
+                    x_t = x_t / 255.0
+                    x_t = x_t.reshape(1, x_t.shape[0], x_t.shape[1])
+
+                    s_t = np.stack((x_t, x_t, x_t, x_t), axis=1) #1*80*80*4
+                    '''
+
                 x_t = skimage.color.rgb2gray(obs)
                 x_t = skimage.transform.resize(x_t, (80, 80))
                 x_t = skimage.exposure.rescale_intensity(x_t, out_range=(0, 255))
 
-                x_t = x_t.reshape(1, x_t.shape[0], x_t.shape[1])
+                x_t = x_t / 255.0
 
-                s_t = np.stack((x_t, x_t, x_t, x_t), axis=1)
+                s_t = np.stack((x_t, x_t, x_t, x_t), axis=2)
+                # print (s_t.shape)
 
+                # In Keras, need to reshape
+                s_t = s_t.reshape(1, s_t.shape[0], s_t.shape[1], s_t.shape[2])  # 1*80*80*4
 
                 while(done==False):
                     # If it is the first move, we can't store anything in the memory
                     action = self.act(s_t)
                     new_state, reward, done, _info = env.step(action)
+                    '''
+                                x_t1 = skimage.color.rgb2gray(new_state)
+                                x_t1 = skimage.transform.resize(x_t1, (80, 80))
+                                x_t1 = skimage.exposure.rescale_intensity(x_t1, out_range=(0, 255))
+                                x_t1 = x_t1 / 255.0
+                                x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
+                                s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
+                                '''
+
                     x_t1 = skimage.color.rgb2gray(new_state)
                     x_t1 = skimage.transform.resize(x_t1, (80, 80))
                     x_t1 = skimage.exposure.rescale_intensity(x_t1, out_range=(0, 255))
 
-                    x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
-                    s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
+                    x_t1 = x_t1 / 255.0
+
+                    x_t1 = x_t1.reshape(1, x_t1.shape[0], x_t1.shape[1], 1)  # 1x80x80x1
+                    s_t1 = np.append(x_t1, s_t[:, :, :, :3], axis=3)
                     self.state = s_t1
                     total_reward += reward
 
