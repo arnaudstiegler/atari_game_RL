@@ -46,7 +46,7 @@ action=4 -> going left no fire
 #We initialize our agent
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
-
+agent.Q.load_weights('/breakout/dqn.h5')
 reward_list = []
 eps_length_list = []
 

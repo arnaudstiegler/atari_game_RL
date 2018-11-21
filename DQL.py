@@ -27,7 +27,7 @@ class DQL_agent():
         self.gamma = 0.99
 
         #Memory replay parameters
-        self.memory_size = 50000
+        self.memory_size = 20000
         # Format of an experience is: (state,previous_state,action,reward)
         self.D = deque([],self.memory_size)
 
