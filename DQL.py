@@ -134,7 +134,7 @@ class DQL_agent():
                 target_f = self.Q.predict(state_t)
                 target_f[0][action] = target
 
-                self.Q.fit(state_t,target_f.reshape((1,self.action_space)), epochs=1, verbose=1)
+                self.Q.fit(state_t,target_f.reshape((1,self.action_space)), epochs=1, verbose=0)
 
             if(self.epsilon > self.final_epsilon):
                 self.epsilon += self.epsilon_decay
@@ -182,7 +182,7 @@ class DQL_agent():
 
             rewards = []
 
-            for ep in range(1):
+            for ep in range(20):
 
                 obs = env.reset()
                 done=False
