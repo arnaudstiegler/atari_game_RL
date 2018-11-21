@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e680ec4f-bcda-414e-8346-4fc5784f3bff" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/breakout/dqn.h5" afterPath="$PROJECT_DIR$/breakout/dqn.h5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DQL.py" afterPath="$PROJECT_DIR$/DQL.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/breakout/epoch_rewards.txt" afterPath="$PROJECT_DIR$/breakout/epoch_rewards.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_agent.py" afterPath="$PROJECT_DIR$/test_agent.py" />
-    </list>
+    <list default="true" id="e680ec4f-bcda-414e-8346-4fc5784f3bff" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,10 +11,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DQL.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DQL.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DQL.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-283">
+            <state relative-caret-position="-1881">
               <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
@@ -51,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_agent1.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_agent1.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_agent1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="141" column="0" lean-forward="false" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
+            <state relative-caret-position="-1224">
+              <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -133,10 +127,10 @@
         <option value="$PROJECT_DIR$/train_agent.py" />
         <option value="$PROJECT_DIR$/skiing/setup" />
         <option value="$PROJECT_DIR$/skiing/epoch_rewards.txt" />
-        <option value="$PROJECT_DIR$/train_agent1.py" />
         <option value="$PROJECT_DIR$/breakout/epoch_rewards.txt" />
         <option value="$PROJECT_DIR$/test_agent.py" />
         <option value="$PROJECT_DIR$/DQL.py" />
+        <option value="$PROJECT_DIR$/train_agent1.py" />
       </list>
     </option>
   </component>
@@ -337,6 +331,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="6" y="39" width="1280" height="733" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27625203" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
@@ -675,22 +670,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DQL.py">
+    <entry file="file://$PROJECT_DIR$/train_agent1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-283">
-          <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+        <state relative-caret-position="-1224">
+          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_agent1.py">
+    <entry file="file://$PROJECT_DIR$/DQL.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="141" column="0" lean-forward="false" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
+        <state relative-caret-position="-1881">
+          <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
