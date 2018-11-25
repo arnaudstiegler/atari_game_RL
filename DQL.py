@@ -237,7 +237,7 @@ class DQL_agent():
                 print(total_reward)
 
             with open('breakout/epoch_rewards.txt','a') as file:
-                file.write(str(np.mean(rewards))+'\n')
+                file.write(str(timesteps) + "," + str(np.mean(rewards))+'\n')
 
             self.time_steps = timesteps
             self.epsilon = epsilon
