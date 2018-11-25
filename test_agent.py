@@ -13,6 +13,7 @@ env = gym.make(env_to_use)
 #env._max_episode_steps = 1000
 #print(env.action_space)
 
+
 '''
 
 env._max_episode_steps is set at 10000 which can lead to very long game.
@@ -45,7 +46,7 @@ action=4 -> going left no fire
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 agent.Q.load_weights('breakout/dqn.h5')
-agent.epsilon=0.05
+agent.epsilon=0.1
 agent.explore = 1
 
 reward_list = []
@@ -73,10 +74,14 @@ for ep in range(100):
     x_t = skimage.color.rgb2gray(obs)
     x_t = skimage.transform.resize(x_t, (80, 80))
     x_t = skimage.exposure.rescale_intensity(x_t, out_range=(0, 255))
-    x_t = x_t / 255.0
-    x_t = x_t.reshape( 1, x_t.shape[0], x_t.shape[1])
 
-    s_t = np.stack((x_t, x_t, x_t, x_t), axis=1)
+    x_t = x_t / 255.0
+
+    s_t = np.stack((x_t, x_t, x_t, x_t), axis=2)
+    # print (s_t.shape)
+
+    # In Keras, need to reshape
+    s_t = s_t.reshape(1, s_t.shape[0], s_t.shape[1], s_t.shape[2])  # 1*80*80*4
 
 
     #state = process_obs(obs)#to create a batch with only one observation
@@ -85,12 +90,14 @@ for ep in range(100):
     #Max number of rounds for one episode
     while(done is False):
 
+
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
 
             action = agent.act(s_t)
             print(action)
             new_state, reward, done, _info = env.step(action)
+
             '''
             x_t1 = skimage.color.rgb2gray(new_state)
             x_t1 = skimage.transform.resize(x_t1, (80, 80))
@@ -109,7 +116,7 @@ for ep in range(100):
             s_t1 = np.append(x_t1, s_t[:, :, :, :3], axis=3)
 
             agent.state = s_t1
-            #env.render()
+            env.render()
             agent.initial_move = False
 
 
@@ -119,6 +126,8 @@ for ep in range(100):
             action = agent.act(s_t)
             print(action)
             new_state,reward,done,_info = env.step(action)
+            if (_info['ale.lives'] < 5):
+                done = True
             '''
             x_t1 = skimage.color.rgb2gray(new_state)
             x_t1 = skimage.transform.resize(x_t1, (80, 80))
@@ -127,6 +136,14 @@ for ep in range(100):
             x_t1 = x_t1.reshape(1, 1, x_t1.shape[0], x_t1.shape[1])
             s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
             '''
+            x_t1 = skimage.color.rgb2gray(new_state)
+            x_t1 = skimage.transform.resize(x_t1, (80, 80))
+            x_t1 = skimage.exposure.rescale_intensity(x_t1, out_range=(0, 255))
+
+            x_t1 = x_t1 / 255.0
+
+            x_t1 = x_t1.reshape(1, x_t1.shape[0], x_t1.shape[1], 1)  # 1x80x80x1
+            s_t1 = np.append(x_t1, s_t[:, :, :, :3], axis=3)
             agent.state = s_t1
             #agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)
             #agent.experience_replay()

@@ -12,6 +12,8 @@ env = gym.make(env_to_use)
 #env._max_episode_steps = 1000
 #print(env.action_space)
 
+
+
 '''
 
 env._max_episode_steps is set at 10000 which can lead to very long game.
@@ -46,10 +48,9 @@ action=4 -> going left no fire
 #We initialize our agent
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
-#agent.Q.load_weights('breakout/dqn.h5')
+agent.Q.load_weights('breakout/dqn.h5')
 reward_list = []
 eps_length_list = []
-
 
 #TODO: render into agent class
 #TODO: Check all parameters for Network/Learning
@@ -165,6 +166,8 @@ while(True):
             # take step
             action = agent.act(s_t)
             new_state,reward,done,_info = env.step(action)
+            if (_info['ale.lives'] < 5):
+                done = True
             '''
             x_t1 = skimage.color.rgb2gray(new_state)
             x_t1 = skimage.transform.resize(x_t1, (80, 80))
@@ -210,6 +213,7 @@ while(True):
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")
+    print("Currently at time step: " + str(agent.time_steps))
 
 agent.Q.save_weights('breakout/dqn.h5')
 
