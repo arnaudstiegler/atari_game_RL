@@ -19,7 +19,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 200000
+        self.explore = 300000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.05
 
@@ -32,7 +32,7 @@ class DQL_agent():
         self.D = deque([],self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 0.1
+        self.learning_rate_cnn = 1e-4
         self.Q = self._build_model()
 
         #Parameters for the ongoing episode
@@ -60,7 +60,7 @@ class DQL_agent():
     def _build_model(self):
 
 
-        init = random_normal(mean=0.0, stddev=0.05, seed=None)
+        init = random_normal(mean=0.0, stddev=0.5, seed=None)
         '''
         model = Sequential()
         model.add(Convolution2D(16, 8, 8, subsample=(4,4), border_mode='same', kernel_initializer=init,input_shape=(img_channels,img_rows,img_cols)))
@@ -127,7 +127,7 @@ class DQL_agent():
                 target_f = self.Q.predict(state_t)
                 target_f[0][action] = target
 
-                self.Q.fit(state_t,target_f.reshape((1,self.action_space)), epochs=1, verbose=1)
+                self.Q.fit(state_t,target_f.reshape((1,self.action_space)), epochs=1, verbose=0)
 
             if(self.epsilon > self.final_epsilon):
                 self.epsilon += self.epsilon_decay
@@ -185,7 +185,6 @@ class DQL_agent():
                 s_t = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
                 while(done==False):
-                    env.render()
                     # If it is the first move, we can't store anything in the memory
                     action = self.act(s_t)
                     new_state, reward, done, _info = env.step(action)

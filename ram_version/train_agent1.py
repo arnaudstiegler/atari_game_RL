@@ -23,8 +23,8 @@ To adress that, we will set it at 1000
 
 
 
-state_space = env.observation_space #Format: Box(250, 160, 3)
-action_space = env.action_space #Format: Discrete(3)
+#state_space = env.observation_space #Format: Box(250, 160, 3)
+#action_space = env.action_space #Format: Discrete(3)
 
 
 state_space = 128 # Using the ram input
