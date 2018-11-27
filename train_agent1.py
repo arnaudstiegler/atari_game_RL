@@ -5,7 +5,7 @@ import timeit
 from utils import process_obs
 import skimage
 
-env_to_use = 'Breakout-v0'
+env_to_use = 'AirRaid-ram-v0'
 
 # game parameters
 env = gym.make(env_to_use)
@@ -27,11 +27,11 @@ To adress that, we will set it at 1000
 state_space = env.observation_space #Format: Box(250, 160, 3)
 action_space = env.action_space #Format: Discrete(3)
 
-#print(state_space)
-#print(action_space)
+print(state_space)
+print(action_space)
 
-state_space = 250,160,3
-action_space = 4
+#state_space = 250,160,3
+#action_space = 4
 
 
 '''
