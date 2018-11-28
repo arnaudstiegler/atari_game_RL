@@ -1,12 +1,11 @@
 from collections import deque
 import numpy as np
 import random
-from keras.layers import Convolution2D,Flatten,Dense,Activation,Conv2D
+from keras.layers import Dense,Activation
 from keras.models import Sequential
 from keras.optimizers import Adam
-from keras.losses import binary_crossentropy,mean_squared_error
 from keras.initializers import random_normal
-import skimage
+
 
 class DQL_agent():
 
