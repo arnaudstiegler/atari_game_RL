@@ -1,15 +1,13 @@
 import gym
-import numpy as np
 import DQL
 import timeit
-from utils import process_obs
-import skimage
-import random
+from keras.models import load_model
 
-env_to_use = 'Breakout-v0'
+env_to_use = 'Skiing-ram-v0'
 
 # game parameters
 env = gym.make(env_to_use)
+env.frameskip = 5 #We do the same action for the next 5 frames
 #env._max_episode_steps = 1000
 #print(env.action_space)
 
@@ -26,9 +24,8 @@ To adress that, we will set it at 1000
 
 #state_space = env.observation_space #Format: Box(250, 160, 3)
 #action_space = env.action_space #Format: Discrete(3)
-
-state_space = 250,160,3
-action_space = 4
+state_space = 128
+action_space = 3
 
 
 '''
@@ -45,7 +42,8 @@ action=4 -> going left no fire
 #We initialize our agent
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
-agent.Q.load_weights('breakout/dqn.h5')
+agent.Q = load_model('results/my_model.h5')
+agent.Q.load_weights('results/dqn.h5')
 agent.epsilon=0.1
 agent.explore = 1
 

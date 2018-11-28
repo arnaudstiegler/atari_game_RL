@@ -196,7 +196,7 @@ class DQL_agent():
                 rewards.append(total_reward)
                 print(total_reward)
 
-            with open('breakout/epoch_rewards.txt','a') as file:
+            with open('results/epoch_rewards.txt','a') as file:
                 file.write(str(timesteps) + "," + str(np.mean(rewards))+'\n')
 
             self.time_steps = timesteps
