@@ -1,2 +1,5 @@
 Setup of the experiment
+explore 200000
+memory 100000
+gamma 0.99
 
