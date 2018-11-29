@@ -18,7 +18,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 1000000
+        self.explore = 500000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.05
 
@@ -31,7 +31,7 @@ class DQL_agent():
         self.D = deque([],self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 1e-4
+        self.learning_rate_cnn = 1e-1
         self.Q = self._build_model()
 
         #Parameters for the ongoing episode
@@ -173,13 +173,14 @@ class DQL_agent():
             self.epsilon = 0.05
 
             rewards = []
+            steps = []
 
             for ep in range(20):
 
                 s_t = env.reset()
                 done=False
                 total_reward = 0
-
+                ep_steps = 0
                 # In Keras, need to reshape
                 s_t = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
@@ -191,13 +192,14 @@ class DQL_agent():
                     s_t1 = new_state.reshape(1, new_state.shape[0])
                     self.state = s_t1
                     total_reward += reward
+                    ep_steps += 1
 
-
+                steps.append(ep_steps)
                 rewards.append(total_reward)
                 print(total_reward)
 
             with open('results/epoch_rewards.txt','a') as file:
-                file.write(str(timesteps) + "," + str(np.mean(rewards))+'\n')
+                file.write(str(timesteps) + "," + str(np.mean(rewards))+','+str(np.mean(steps))+'\n')
 
             self.time_steps = timesteps
             self.epsilon = epsilon

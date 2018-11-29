@@ -2,6 +2,7 @@ import gym
 import numpy as np
 import DQL
 import timeit
+import time
 from keras.models import load_model
 
 
@@ -78,8 +79,7 @@ for ep in range(100):
 
     #Max number of rounds for one episode
     while(done is False):
-
-
+        time.sleep(.05)
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
 

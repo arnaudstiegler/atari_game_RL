@@ -7,7 +7,7 @@ env_to_use = 'Skiing-ram-v0'
 
 # game parameters
 env = gym.make(env_to_use)
-env.frameskip = 5 #We do the same action for the next 5 frames
+env.frameskip = 2 #We do the same action for the next 5 frames
 #env._max_episode_steps = 1000
 #print(env.action_space)
 
