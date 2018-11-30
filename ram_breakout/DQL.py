@@ -31,8 +31,9 @@ class DQL_agent():
         self.D = deque([],self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 1e-1
+        self.learning_rate_cnn = 1e-4
         self.Q = self._build_model()
+        self.target_Q = self._build_model()
 
         #Parameters for the ongoing episode
         self.state = None
@@ -41,14 +42,18 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 1000 #Number of steps for observation (no learning)
+        self.observe_steps = 10000 #Number of steps for observation (no learning)
 
+        #Update the target network every ...
+        self.update_target_Q = 10000
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
         self.experience_batch_size = 32
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
+        #Saving model
+        self.backup = 1000
 
     def reinitialize_agent(self):
         #This function is actually useless
@@ -58,8 +63,6 @@ class DQL_agent():
 
     def _build_model(self):
 
-
-        init = random_normal(mean=0.0, stddev=0.5, seed=None)
         '''
         model = Sequential()
         model.add(Convolution2D(16, 8, 8, subsample=(4,4), border_mode='same', kernel_initializer=init,input_shape=(img_channels,img_rows,img_cols)))
@@ -78,11 +81,11 @@ class DQL_agent():
         model.compile(loss='mse', optimizer=adam)
         '''
         model = Sequential()
-        model.add(Dense(128,input_shape=(128,),kernel_initializer=init))
+        model.add(Dense(128,input_shape=(128,)))
         model.add(Activation('relu'))
-        model.add(Dense(128,kernel_initializer=init))
+        model.add(Dense(128))
         model.add(Activation('relu'))
-        model.add(Dense(self.action_space,kernel_initializer=init))
+        model.add(Dense(self.action_space))
         model.add(Activation('linear'))
         adam = Adam(lr=self.learning_rate_cnn)
         model.compile(loss='mse', optimizer=adam)
@@ -103,30 +106,18 @@ class DQL_agent():
                 reward = batch[i][3]
                 done = batch[i][4]
 
-                '''
-                OLD VERSION
-                
-                if(done):
-                    target=reward
-                else:
-                    #When predicting, predict returns [[proba1,proba2,proba3]]
-                    target = reward + self.gamma*np.amax(self.Q.predict(state_t1)[0])
-
-                # When predicting, predict returns [[proba1,proba2,proba3]]
-                target_f = self.Q.predict(state_t1)[0]
-                target_f[action] = target
-                target_f = np.array(target_f)
-                '''
-
                 target = reward
                 if not done:
-                    Q_next = self.Q.predict(state_t1)[0]
+                    #Predicting with the target network
+                    Q_next = self.target_Q.predict(state_t1)[0]
                     target = (reward + self.gamma * np.amax(Q_next))
 
+                #Keeping the same estimate for other actions
                 target_f = self.Q.predict(state_t)
+                #Updating the target for the corresponding action
                 target_f[0][action] = target
 
-                self.Q.fit(state_t,target_f.reshape((1,self.action_space)), epochs=1, verbose=0)
+                self.Q.fit(state_t,target_f, epochs=1, verbose=0)
 
             if(self.epsilon > self.final_epsilon):
                 self.epsilon += self.epsilon_decay

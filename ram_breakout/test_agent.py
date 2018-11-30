@@ -46,17 +46,11 @@ action=4 -> going left no fire
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 agent.Q = load_model('results/my_model.h5')
 agent.Q.load_weights('results/dqn.h5')
-agent.epsilon=0.1
+agent.epsilon=0.05
 agent.explore = 1
 
 reward_list = []
 eps_length_list = []
-
-
-#TODO: render into agent class
-#TODO: Check all parameters for Network/Learning
-#TODO: Check reward
-#TODO: Check TD target
 
 for ep in range(100):
 

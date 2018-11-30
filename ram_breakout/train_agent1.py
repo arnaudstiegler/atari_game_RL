@@ -1,6 +1,6 @@
 import gym
 import numpy as np
-import DQL
+from ram_breakout.DQL import DQL_agent
 import timeit
 from utils import process_obs
 import skimage
@@ -43,7 +43,7 @@ action=4 -> going left no fire
 
 #We initialize our agent
 
-agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
+agent = DQL_agent(state_space= state_space, action_space= action_space)
 reward_list = []
 eps_length_list = []
 
@@ -66,9 +66,7 @@ while(True):
     total_reward = 0
     steps_in_ep = 0
 
-    #agent.reinitialize_agent()
-
-    agent.check_learning(env, ep)  # Returns false if the check is not processed
+    agent.check_learning(env, ep)
 
     done = False
 
@@ -82,6 +80,10 @@ while(True):
     #Max number of rounds for one episode
     while(done is False):
         #env.render()
+
+        if(agent.time_steps % agent.update_target_Q == 0):
+            agent.target_Q.set_weights(agent.Q.get_weights())
+
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
             action = agent.act(s_t)
@@ -114,6 +116,10 @@ while(True):
             agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)
             agent.experience_replay()
 
+        if(agent.time_steps % agent.backup == 0):
+            # We backup the weights
+            agent.Q.save('results/my_model.h5')
+            agent.Q.save_weights('results/dqn.h5')
 
 
 
@@ -126,18 +132,16 @@ while(True):
 
     print("total reward: " + str(total_reward))
     print("total number of steps: " + str(steps_in_ep))
-    print("agent epsilon: " + str(agent.epsilon))
     reward_list.append(total_reward)
     eps_length_list.append(steps_in_ep)
 
-    #We backup the weights
-    agent.Q.save('results/my_model.h5')
-    agent.Q.save_weights('results/dqn.h5')
-
     ep+=1
 
+
     end = timeit.default_timer()
+    avg_timestep_s = float(steps_in_ep) / (end-start)
     print("Episode took " + str((end-start)) + " seconds")
+    print("Average computation speed was: " + str(round(avg_timestep_s)) + " steps per second")
     print("Currently at time step: " + str(agent.time_steps))
 
 agent.Q.save_weights('results/dqn.h5')

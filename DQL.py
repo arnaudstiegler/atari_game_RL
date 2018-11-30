@@ -42,7 +42,7 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 1000 #Number of steps for observation (no learning)
+        self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
