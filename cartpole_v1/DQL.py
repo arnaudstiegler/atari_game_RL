@@ -17,7 +17,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 500000
+        self.explore = 300000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.05
 
@@ -175,17 +175,16 @@ class DQL_agent():
                 total_reward = 0
                 ep_steps = 0
                 # In Keras, need to reshape
-                s_t = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
+                self.state = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
                 while(done==False):
-                    # If it is the first move, we can't store anything in the memory
-                    action = self.act(s_t)
+                    action = self.act(self.state)
                     new_state, reward, done, _info = env.step(action)
 
-                    s_t1 = new_state.reshape(1, new_state.shape[0])
-                    self.state = s_t1
+                    self.state = new_state.reshape(1, new_state.shape[0])
                     total_reward += reward
                     ep_steps += 1
+
 
                 steps.append(ep_steps)
                 rewards.append(total_reward)
