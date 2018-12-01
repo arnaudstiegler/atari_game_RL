@@ -4,7 +4,6 @@ import random
 from keras.layers import Dense,Activation
 from keras.models import Sequential
 from keras.optimizers import Adam
-from keras.initializers import random_normal
 
 
 class DQL_agent():
@@ -42,7 +41,7 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 1 #Number of steps for observation (no learning)
+        self.observe_steps = 1000 #Number of steps for observation (no learning)
 
         #Update the target network every ...
         self.update_target_Q = 10000
@@ -81,9 +80,9 @@ class DQL_agent():
         model.compile(loss='mse', optimizer=adam)
         '''
         model = Sequential()
-        model.add(Dense(128,input_dim=(128)))
+        model.add(Dense(64,input_dim=(self.state_space)))
         model.add(Activation('relu'))
-        model.add(Dense(128))
+        model.add(Dense(32))
         model.add(Activation('relu'))
         model.add(Dense(self.action_space))
         model.add(Activation('linear'))
@@ -160,7 +159,7 @@ class DQL_agent():
 
 
     def check_learning(self,env,ep):
-        if(ep % 10 == 0 ):
+        if(ep % 100 == 0 ):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
             timesteps = self.time_steps
