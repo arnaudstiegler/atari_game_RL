@@ -66,7 +66,7 @@ while(True):
     total_reward = 0
     steps_in_ep = 0
 
-    #agent.check_learning(env, ep)
+    agent.check_learning(env, ep)
 
     done = False
 
