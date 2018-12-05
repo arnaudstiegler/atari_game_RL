@@ -3,14 +3,13 @@ import numpy as np
 import DQL
 import timeit
 import time
-from keras.models import load_model
-
+from ram_breakout.utils import normalize
 
 env_to_use = 'Breakout-ram-v0'
 
 # game parameters
 env = gym.make(env_to_use)
-env.frameskip = 5 #We do the same action for the next 5 frames
+env.frameskip = 4 #We do the same action for the next 5 frames
 
 
 
@@ -44,7 +43,7 @@ action=4 -> going left no fire
 #We initialize our agent
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
-agent.Q = load_model('results/my_model.h5')
+#agent.Q = load_model('results/my_model.h5')
 agent.Q.load_weights('results/dqn.h5')
 agent.epsilon=0.05
 agent.explore = 1
@@ -64,7 +63,7 @@ for ep in range(100):
 
     # Initial state
     s_t = env.reset() #Observation is array (128)
-
+    s_t = np.apply_along_axis(normalize, 0, s_t) #normalize the input
     s_t = s_t.reshape(1, s_t.shape[0])  #to have (1,128) for Keras
 
 
@@ -73,13 +72,13 @@ for ep in range(100):
 
     #Max number of rounds for one episode
     while(done is False):
-        time.sleep(.01)
+        time.sleep(.05)
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
 
             action = agent.act(s_t)
             new_state, reward, done, _info = env.step(action)
-
+            new_state = np.apply_along_axis(normalize, 0, new_state)
             s_t1 = new_state.reshape(1, new_state.shape[0])
 
             agent.state = s_t1
@@ -92,6 +91,7 @@ for ep in range(100):
             # take step
             action = agent.act(s_t)
             new_state,reward,done,_info = env.step(action)
+            new_state = np.apply_along_axis(normalize, 0, new_state)
             s_t1 = new_state.reshape(1, new_state.shape[0])
             agent.state = s_t1
             #agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)

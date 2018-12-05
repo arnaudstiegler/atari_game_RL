@@ -2,14 +2,15 @@ import gym
 import numpy as np
 from DQL import DQL_agent
 import timeit
-from utils import process_obs
-import skimage
+from keras.models import load_model
+import keras
+from ram_breakout.utils import normalize
 
 env_to_use = 'Breakout-ram-v0'
 
 # game parameters
 env = gym.make(env_to_use)
-env.frameskip = 5 #We do the same action for the next 5 frames
+env.frameskip = 4 #We do the same action for the next 5 frames
 
 
 
@@ -74,6 +75,7 @@ while(True):
     s_t = env.reset() #Observation is array (128)
 
     #In Keras, need to reshape
+    s_t = np.apply_along_axis(normalize, 0, s_t)
     s_t = s_t.reshape(1, s_t.shape[0])  #1*80*80*4
 
 
@@ -82,15 +84,33 @@ while(True):
         #env.render()
 
         #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL
-        if(agent.time_steps % agent.update_target_Q == 0):
-            print("update target network")
-            agent.target_Q.set_weights(agent.Q.get_weights())
+        if(agent.time_steps % agent.update_target_Q == 0 and agent.time_steps !=0):
+            # serialize model to JSON
+            model_json = agent.Q.to_json()
+            with open("results/model.json", "w") as json_file:
+                json_file.write(model_json)
+            # serialize weights to HDF5
+            agent.Q.save_weights("results/model.h5")
+            print("Saved model to disk")
+
+            # load json and create model
+            json_file = open('results/model.json', 'r')
+            loaded_model_json = json_file.read()
+            json_file.close()
+            loaded_model = keras.models.model_from_json(loaded_model_json)
+            # load weights into new model
+            loaded_model.load_weights("results/model.h5")
+            agent.Q_target = loaded_model
+            print("Loaded model from disk")
+
+            #print("update target network")
+            #agent.target_Q = load_model('results/my_model.h5')
 
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
             action = agent.act(s_t)
             new_state, reward, done, _info = env.step(action)
-
+            new_state = np.apply_along_axis(normalize, 0, new_state)
             s_t1 = new_state.reshape(1, new_state.shape[0])
 
             agent.state = s_t1
@@ -101,6 +121,7 @@ while(True):
             # take step
             action = agent.act(s_t)
             new_state, reward, done, _info = env.step(action)
+            new_state = np.apply_along_axis(normalize, 0, new_state)
             s_t1 = new_state.reshape(1, new_state.shape[0])
 
             agent.state = s_t1
@@ -113,6 +134,7 @@ while(True):
             # take step
             action = agent.act(s_t)
             new_state,reward,done,_info = env.step(action)
+            new_state = np.apply_along_axis(normalize, 0, new_state)
             s_t1 = new_state.reshape(1, new_state.shape[0])
             agent.state = s_t1
             agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)

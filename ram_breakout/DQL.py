@@ -3,8 +3,8 @@ import numpy as np
 import random
 from keras.layers import Dense, Activation
 from keras.models import Sequential
-from keras.optimizers import Adam
-
+from keras.optimizers import Adam,RMSprop
+from ram_breakout.utils import huber_loss
 
 class DQL_agent():
     def __init__(self, state_space, action_space):
@@ -29,7 +29,7 @@ class DQL_agent():
         self.D = deque([], self.memory_size)
 
         # Parameters for the CNN
-        self.learning_rate_cnn = 1e-4
+        self.learning_rate = 1e-4
         self.Q = self._build_model()
         self.target_Q = self._build_model()
 
@@ -40,7 +40,7 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 1000  # Number of steps for observation (no learning)
+        self.observe_steps = 10000 # Number of steps for observation (no learning)
 
         # Update the target network every ...
         self.update_target_Q = 10000
@@ -87,8 +87,8 @@ class DQL_agent():
         model.add(Activation('relu'))
         model.add(Dense(self.action_space))
         model.add(Activation('linear'))
-        adam = Adam(lr=self.learning_rate_cnn)
-        model.compile(loss='mse', optimizer=adam)
+        rms = RMSprop(lr=self.learning_rate, rho=0.95, epsilon=0.01)
+        model.compile(loss=huber_loss, optimizer=rms)
 
         return model
 
@@ -121,6 +121,7 @@ class DQL_agent():
                 state_batch.append(state_t)
                 target_batch.append(target_f)
                 # self.Q.fit(state_t,target_f, epochs=1, verbose=0)
+
             self.Q.fit(np.array(state_batch).reshape((self.experience_batch_size, self.state_space)),
                        np.array(target_batch).reshape((self.experience_batch_size, self.action_space)), epochs=1,
                        verbose=0)

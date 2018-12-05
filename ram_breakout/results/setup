@@ -3,3 +3,12 @@ explore 1000000
 memory 500000
 gamma 0.99
 
+CHANGE OPTIMIZER TO RMSPROP
+CHANGE LOSS TO HUBER LOSS -> done
+
+keras.optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0)
+
+a= np.array([1,2,3,4])
+np.apply_along_axis(f, 0, a)
+
+

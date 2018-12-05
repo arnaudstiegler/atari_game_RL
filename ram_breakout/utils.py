@@ -1,5 +1,7 @@
 import skimage
 import numpy as np
+import tensorflow as tf
+from keras import backend as K
 
 def process_obs(observation):
     #So that it has the correct format for Keras
@@ -11,3 +13,16 @@ def process_obs(observation):
     s_t1 = np.append(x_t1, s_t[:, :3, :, :], axis=1)
     return observation.reshape((1,250, 160,3))
 
+
+def huber_loss(a, b, in_keras=True):
+    error = a - b
+    quadratic_term = error*error / 2
+    linear_term = abs(error) - 1/2
+    use_linear_term = (abs(error) > 1.0)
+    if in_keras:
+        # Keras won't let us multiply floats by booleans, so we explicitly cast the booleans to floats
+        use_linear_term = K.cast(use_linear_term, 'float32')
+    return use_linear_term * linear_term + (1-use_linear_term) * quadratic_term
+
+def normalize(x):
+    return x/256
