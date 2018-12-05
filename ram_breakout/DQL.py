@@ -4,7 +4,7 @@ import random
 from keras.layers import Dense, Activation
 from keras.models import Sequential
 from keras.optimizers import Adam,RMSprop
-from ram_breakout.utils import huber_loss
+from utils import huber_loss
 
 class DQL_agent():
     def __init__(self, state_space, action_space):
@@ -87,7 +87,7 @@ class DQL_agent():
         model.add(Activation('relu'))
         model.add(Dense(self.action_space))
         model.add(Activation('linear'))
-        rms = RMSprop(lr=self.learning_rate, rho=0.95, epsilon=0.01)
+        rms = RMSprop(lr=self.learning_rate, rho=0.9, epsilon=None, decay=0.0)
         model.compile(loss=huber_loss, optimizer=rms)
 
         return model
@@ -156,7 +156,7 @@ class DQL_agent():
         self.D.append([state, previous_state, action, reward, done])
 
     def check_learning(self, env, ep):
-        if (ep % 10 == 0):
+        if (ep % 50 == 0):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
             timesteps = self.time_steps

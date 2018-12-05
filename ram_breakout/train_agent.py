@@ -4,7 +4,7 @@ from DQL import DQL_agent
 import timeit
 from keras.models import load_model
 import keras
-from ram_breakout.utils import normalize
+from utils import normalize
 
 env_to_use = 'Breakout-ram-v0'
 
@@ -76,7 +76,7 @@ while(True):
 
     #In Keras, need to reshape
     s_t = np.apply_along_axis(normalize, 0, s_t)
-    s_t = s_t.reshape(1, s_t.shape[0])  #1*80*80*4
+    s_t = s_t.reshape(1, s_t.shape[0])  #128
 
 
     #Max number of rounds for one episode

@@ -3,7 +3,7 @@ import numpy as np
 import DQL
 import timeit
 import time
-from ram_breakout.utils import normalize
+from utils import normalize
 
 env_to_use = 'Breakout-ram-v0'
 
