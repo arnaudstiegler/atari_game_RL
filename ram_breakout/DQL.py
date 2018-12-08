@@ -124,7 +124,7 @@ class DQL_agent():
 
             self.Q.fit(np.array(state_batch).reshape((self.experience_batch_size, self.state_space)),
                        np.array(target_batch).reshape((self.experience_batch_size, self.action_space)), epochs=1,
-                       verbose=1)
+                       verbose=0)
             if (self.epsilon > self.final_epsilon):
                 self.epsilon += self.epsilon_decay
 
