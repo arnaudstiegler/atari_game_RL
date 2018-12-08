@@ -83,6 +83,11 @@ while(True):
     while(done is False):
         #env.render()
 
+
+        #FOR TRAINING, WE STOP EACH EPISODE AFTER ONE LIFE IS LOST
+        if(env.env.ale.lives() < 5):
+            break
+
         #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL
         if(agent.time_steps % agent.update_target_Q == 0 and agent.time_steps !=0):
             # serialize model to JSON

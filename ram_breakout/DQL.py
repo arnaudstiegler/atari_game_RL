@@ -40,7 +40,7 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 33 # Number of steps for observation (no learning)
+        self.observe_steps = 10000 # Number of steps for observation (no learning)
 
         # Update the target network every ...
         self.update_target_Q = 10000
