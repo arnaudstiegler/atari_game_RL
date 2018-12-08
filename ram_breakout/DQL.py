@@ -40,7 +40,7 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 10000 # Number of steps for observation (no learning)
+        self.observe_steps = 33 # Number of steps for observation (no learning)
 
         # Update the target network every ...
         self.update_target_Q = 10000
@@ -88,7 +88,7 @@ class DQL_agent():
         model.add(Dense(self.action_space))
         model.add(Activation('linear'))
         rms = RMSprop(lr=self.learning_rate, rho=0.9, epsilon=None, decay=0.0)
-        model.compile(loss=huber_loss, optimizer=rms)
+        model.compile(loss='mse', optimizer=rms)
 
         return model
 
@@ -124,7 +124,7 @@ class DQL_agent():
 
             self.Q.fit(np.array(state_batch).reshape((self.experience_batch_size, self.state_space)),
                        np.array(target_batch).reshape((self.experience_batch_size, self.action_space)), epochs=1,
-                       verbose=0)
+                       verbose=1)
             if (self.epsilon > self.final_epsilon):
                 self.epsilon += self.epsilon_decay
 
