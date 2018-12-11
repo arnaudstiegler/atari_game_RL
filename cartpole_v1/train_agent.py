@@ -15,7 +15,7 @@ env = gym.make(env_to_use)
 
 env._max_episode_steps is set at 10000 which can lead to very long game.
 The issue with that is that the agent gets stuck in suboptimal minimas (namely not moving)
-To adress that, we will set it at 1000 
+To adress that, we will set it at 1000
 
 '''
 
@@ -56,10 +56,10 @@ ep = 0
 
 while(True):
 
-    print("---- Currently running episode " +str(ep))
+    #print("---- Currently running episode " +str(ep))
     start = timeit.default_timer()
 
-    print('epsilon value: ' + str(agent.epsilon))
+    #print('epsilon value: ' + str(agent.epsilon))
 
     total_reward = 0
     steps_in_ep = 0
@@ -84,6 +84,7 @@ while(True):
             print("update target network")
             agent.target_Q.set_weights(agent.Q.get_weights())
 
+        '''
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
             action = agent.act(s_t)
@@ -91,35 +92,38 @@ while(True):
 
             s_t1 = new_state.reshape(1, new_state.shape[0])
 
+            agent.previous_state = s_t
             agent.state = s_t1
             agent.initial_move = False
 
         elif(agent.observe_phase):
             #While we observe, we do not want to do replay_memory
-            # take step
             action = agent.act(s_t)
             new_state, reward, done, _info = env.step(action)
             s_t1 = new_state.reshape(1, new_state.shape[0])
 
+            agent.previous_state = s_t
             agent.state = s_t1
-            agent.add_to_memory(agent.state, agent.previous_state, action, reward, done)
+            agent.add_to_memory(agent.previous_state,action,reward,agent.state,done)
             if (agent.time_steps > agent.observe_steps):
                 agent.observe_phase = False
                 print("--- END OBSERVE PHASE ---")
 
         else:
             # take step
-            action = agent.act(s_t)
-            new_state,reward,done,_info = env.step(action)
-            s_t1 = new_state.reshape(1, new_state.shape[0])
-            agent.state = s_t1
-            agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)
-            agent.experience_replay()
+        '''
+        action = agent.act(s_t)
+        new_state,reward,done,_info = env.step(action)
+        s_t1 = new_state.reshape(1, new_state.shape[0])
+
+        agent.previous_state = s_t
+        agent.state = s_t1
+        agent.add_to_memory(agent.previous_state,action,reward,agent.state,done)
+        agent.experience_replay()
 
         if(agent.time_steps % agent.backup == 0):
-            # We backup the weights
+            # We backup the model
             agent.Q.save('results/my_model.h5')
-            agent.Q.save_weights('results/dqn.h5')
 
 
 
@@ -130,19 +134,23 @@ while(True):
         s_t = s_t1
         agent.previous_state = s_t1
 
-    print("total reward: " + str(total_reward))
-    print("total number of steps: " + str(steps_in_ep))
-    reward_list.append(total_reward)
-    eps_length_list.append(steps_in_ep)
-
-    ep+=1
-
+    #print("total reward: " + str(total_reward))
+    #print("total number of steps: " + str(steps_in_ep))
 
     end = timeit.default_timer()
     avg_timestep_s = float(steps_in_ep) / (end-start)
-    print("Episode took " + str((end-start)) + " seconds")
-    print("Average computation speed was: " + str(round(avg_timestep_s)) + " steps per second")
-    print("Currently at time step: " + str(agent.time_steps))
 
-agent.Q.save_weights('dqn.h5')
+    print("episode: {}, score = {}, time = {:0.2f}, epsilon = {}".format(ep,total_reward,avg_timestep_s,agent.epsilon))
+    reward_list.append(total_reward)
+    eps_length_list.append(steps_in_ep)
 
+    with open('results/epoch_rewards.txt','a') as file:
+        file.write("{},{}".format(ep,total_reward) + '\n')
+
+
+    ep+=1
+    #print("Episode took " + str((end-start)) + " seconds")
+    #print("Average computation speed was: " + str(round(avg_timestep_s)) + " steps per second")
+    #print("Currently at time step: " + str(agent.time_steps))
+
+#agent.Q.save_weights('dqn.h5')

@@ -6,11 +6,11 @@ import time
 from keras.models import load_model
 
 
-env_to_use = 'Breakout-ram-v0'
+env_to_use = 'CartPole-v1'
 
 # game parameters
 env = gym.make(env_to_use)
-env.frameskip = 5 #We do the same action for the next 5 frames
+#env.frameskip = 5 #We do the same action for the next 5 frames
 
 
 
@@ -22,12 +22,8 @@ To adress that, we will set it at 1000
 
 '''
 
-
-
-#state_space = env.observation_space #Format: Box(250, 160, 3)
-#action_space = env.action_space #Format: Discrete(3)
-state_space = 128
-action_space = 4
+state_space = 4
+action_space = 2
 
 
 '''
@@ -45,7 +41,7 @@ action=4 -> going left no fire
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 agent.Q = load_model('results/my_model.h5')
-agent.Q.load_weights('results/dqn.h5')
+#agent.Q.load_weights('results/dqn.h5')
 agent.epsilon=0.05
 agent.explore = 1
 
@@ -94,8 +90,6 @@ for ep in range(100):
             new_state,reward,done,_info = env.step(action)
             s_t1 = new_state.reshape(1, new_state.shape[0])
             agent.state = s_t1
-            #agent.add_to_memory(agent.state,agent.previous_state,action,reward,done)
-            #agent.experience_replay()
 
 
 
@@ -113,9 +107,6 @@ for ep in range(100):
     reward_list.append(total_reward)
     eps_length_list.append(steps_in_ep)
 
-    #We backup the rewards
-    #np.savetxt("rewards_dqn", reward_list)
-    #np.savetxt("steps_dqn", eps_length_list)
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")

@@ -17,7 +17,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 300000
+        self.explore = 1000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.05
 
@@ -25,14 +25,16 @@ class DQL_agent():
         self.gamma = 0.99
 
         #Memory replay parameters
-        self.memory_size = 300000
+        self.memory_size = 50000
         # Format of an experience is: (state,previous_state,action,reward)
-        self.D = deque([],self.memory_size)
+        self.memory = deque([], self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 1e-4
+        self.learning_rate_cnn = 0.001
         self.Q = self._build_model()
         self.target_Q = self._build_model()
+        #So that both networks start with the same weights
+        self.target_Q.set_weights(self.Q.get_weights())
 
         #Parameters for the ongoing episode
         self.state = None
@@ -41,10 +43,10 @@ class DQL_agent():
         self.reward = None
         self.initial_move = True
         self.observe_phase = True
-        self.observe_steps = 1000 #Number of steps for observation (no learning)
+        self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 10000
+        self.update_target_Q = 500
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
@@ -58,7 +60,7 @@ class DQL_agent():
         #This function is actually useless
         self.initial_move = True
         self.time_steps = 0
-        self.D = deque([], self.memory_size)
+        self.memory = deque([], self.memory_size)
 
     def _build_model(self):
 
@@ -68,10 +70,10 @@ class DQL_agent():
         model.add(Activation('relu'))
         model.add(Convolution2D(32, 4, 4, subsample=(2, 2), border_mode='same', kernel_initializer=init))
         model.add(Activation('relu'))
-    
+
         #model.add(Convolution2D(64, 3, 3,strides=4, subsample=(1, 1), border_mode='same',kernel_initializer=init))
         #model.add(Activation('relu'))
-        
+
         model.add(Flatten())
         model.add(Dense(256,kernel_initializer=init))
         model.add(Activation('relu'))
@@ -80,12 +82,9 @@ class DQL_agent():
         model.compile(loss='mse', optimizer=adam)
         '''
         model = Sequential()
-        model.add(Dense(64,input_dim=(self.state_space)))
-        model.add(Activation('relu'))
-        model.add(Dense(32))
-        model.add(Activation('relu'))
-        model.add(Dense(self.action_space))
-        model.add(Activation('linear'))
+        model.add(Dense(24,input_dim=(self.state_space),activation='relu'))
+        model.add(Dense(24,activation='relu'))
+        model.add(Dense(self.action_space,activation='linear'))
         adam = Adam(lr=self.learning_rate_cnn)
         model.compile(loss='mse', optimizer=adam)
 
@@ -94,6 +93,7 @@ class DQL_agent():
 
     def experience_replay(self):
 
+        '''
         if(len(self.D) > self.experience_batch_size+1):
 
             batch = random.sample(self.D, self.experience_batch_size)
@@ -124,7 +124,29 @@ class DQL_agent():
             self.Q.fit(np.array(state_batch).reshape((self.experience_batch_size,self.state_space)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), epochs=1, verbose=0)
             if(self.epsilon > self.final_epsilon):
                 self.epsilon += self.epsilon_decay
+        '''
+        if (len(self.memory) > self.experience_batch_size):
 
+            minibatch = random.sample(self.memory,self.experience_batch_size)
+
+            state_batch = []
+            target_batch = []
+
+            for state,action,reward,next_state,done in minibatch:
+
+
+                target = reward
+                if not done:
+                    target = reward + self.gamma * np.amax(self.target_Q.predict(next_state)[0])
+                target_f = self.Q.predict(state)
+                target_f[0][action] = target
+
+                target_batch.append(target_f)
+                state_batch.append(state)
+
+            self.Q.fit(np.array(state_batch).reshape((self.experience_batch_size,self.state_space)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), epochs=1, verbose=0)
+            if self.epsilon > self.final_epsilon:
+                self.epsilon += self.epsilon_decay
 
 
     def act(self,state):
@@ -140,26 +162,26 @@ class DQL_agent():
                         Index of the chosen action
                 '''
 
-        q_values = self.Q.predict(state)[0] #array of q(state,action) for all action
+        # We have done an additional step
+        self.time_steps += 1
+
         random_float = np.random.random()
         if (random_float < self.epsilon):
-            new_action = np.random.randint(self.action_space)
+            return np.random.randint(self.action_space)
         else:
-            new_action = np.argmax(q_values)
-
-        #We have done an additional step
-        self.time_steps += 1
-        return new_action
+            # array of q(state,action) for all action
+            return np.argmax(self.Q.predict(state)[0])
 
 
 
 
-    def add_to_memory(self,state,previous_state,action,reward,done):
-        self.D.append([state,previous_state,action,reward,done])
+
+    def add_to_memory(self,state,action,reward,next_state,done):
+        self.memory.append((state, action, reward, next_state, done))
 
 
     def check_learning(self,env,ep):
-        if(ep % 100 == 0 ):
+        if(ep % 25 == 0 ):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
             timesteps = self.time_steps
@@ -168,7 +190,7 @@ class DQL_agent():
             rewards = []
             steps = []
 
-            for ep in range(20):
+            for it in range(20):
 
                 s_t = env.reset()
                 done=False
@@ -188,10 +210,9 @@ class DQL_agent():
 
                 steps.append(ep_steps)
                 rewards.append(total_reward)
-                print(total_reward)
 
-            with open('results/epoch_rewards.txt','a') as file:
-                file.write(str(timesteps) + "," + str(np.mean(rewards))+','+str(np.mean(steps))+'\n')
+            with open('results/check_learning.txt','a') as file:
+                file.write(str(ep) + "," + str(np.mean(rewards))+'\n')
 
             self.time_steps = timesteps
             self.epsilon = epsilon
