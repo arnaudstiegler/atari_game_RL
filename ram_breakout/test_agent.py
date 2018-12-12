@@ -4,7 +4,7 @@ import DQL
 import timeit
 import time
 from utils import normalize
-import keras
+from keras.models import load_model
 
 env_to_use = 'Breakout-ram-v4'
 
@@ -13,39 +13,26 @@ env = gym.make(env_to_use)
 env.frameskip = 4 #We do the same action for the next 5 frames
 
 
-
-'''
-
-env._max_episode_steps is set at 10000 which can lead to very long game.
-The issue with that is that the agent gets stuck in suboptimal minimas (namely not moving)
-To adress that, we will set it at 1000 
-
-'''
-
-
-
 #state_space = env.observation_space #Format: Box(250, 160, 3)
 #action_space = env.action_space #Format: Discrete(3)
 state_space = 128
 action_space = 4
 
 
-'''
+import gym
+import numpy as np
+import DQL
+import timeit
+import time
+from keras.models import load_model
 
-env.step() -> returns array (state,reward,done?,_info)
 
-Action State for Time pilot
-action=1 -> going straight
-action=2 -> going up no fire
-action=3 -> going right no fire
-action=4 -> going left no fire
-'''
 
 #We initialize our agent
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
-agent.Q.load_model('results/my_model.h5')
-#agent.Q.load_weights('results/my_model.h5')
+agent.Q = load_model('results/my_model.h5')
+#agent.Q.load_weights('results/dqn.h5')
 agent.epsilon=0.05
 agent.explore = 1
 
@@ -62,18 +49,28 @@ for ep in range(100):
 
     #agent.reinitialize_agent()
 
-    # Initial state
-    s_t = env.reset() #Observation is array (128)
-    s_t = np.apply_along_axis(normalize, 0, s_t) #normalize the input
-    s_t = s_t.reshape(1, s_t.shape[0])  #to have (1,128) for Keras
+    s_t = env.reset()  # Observation is array (128)
 
+    # In Keras, need to reshape
+    s_t = np.apply_along_axis(normalize, 0, s_t)
+    s_t = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
+    # We force the game to start directly
+    s_t, a, b, c = env.step(1)
+
+    s_t = np.apply_along_axis(normalize, 0, s_t)
+    s_t = s_t.reshape(1, s_t.shape[0])
     #state = process_obs(obs)#to create a batch with only one observation
     done=False
 
     #Max number of rounds for one episode
     while(done is False):
         time.sleep(.05)
+
+        # FOR TRAINING, WE STOP EACH EPISODE AFTER ONE LIFE IS LOST
+        if (env.env.ale.lives() < 5):
+            break
+
         if(agent.initial_move):
             # If it is the first move, we can't store anything in the memory
 
@@ -120,4 +117,3 @@ for ep in range(100):
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")
-

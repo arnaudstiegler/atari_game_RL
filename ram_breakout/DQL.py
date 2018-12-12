@@ -30,7 +30,7 @@ class DQL_agent():
         self.memory = deque([], self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 0.001
+        self.learning_rate_cnn = 0.0001
         self.Q = self._build_model()
         self.use_target = True
         self.target_Q = self._build_model()
@@ -47,7 +47,7 @@ class DQL_agent():
         self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 2000
+        self.update_target_Q = 3000
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
@@ -153,6 +153,11 @@ class DQL_agent():
                 self.state = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
                 while(done==False):
+
+                    # FOR TRAINING, WE STOP EACH EPISODE AFTER ONE LIFE IS LOST
+                    if (env.env.ale.lives() < 5):
+                        break
+
                     action = self.act(self.state)
                     new_state, reward, done, _info = env.step(action)
 
