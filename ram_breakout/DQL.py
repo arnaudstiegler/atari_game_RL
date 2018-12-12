@@ -3,7 +3,7 @@ import numpy as np
 import random
 from keras.layers import Dense,Activation
 from keras.models import Sequential
-from keras.optimizers import Adam
+from keras.optimizers import Adam,RMSprop
 
 
 class DQL_agent():
@@ -69,8 +69,9 @@ class DQL_agent():
         model.add(Dense(128,input_dim=(self.state_space),activation='relu'))
         model.add(Dense(128,activation='relu'))
         model.add(Dense(self.action_space,activation='linear'))
-        adam = Adam(lr=self.learning_rate_cnn)
-        model.compile(loss='mse', optimizer=adam)
+        #adam = Adam(lr=self.learning_rate_cnn)
+        opt = RMSprop(lr=self.learning_rate_cnn, rho=0.9, epsilon=None, decay=0.0)
+        model.compile(loss='mse', optimizer=opt)
 
         return model
 

@@ -80,9 +80,9 @@ while(True):
         #env.render()
 
         #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL
-        if(agent.time_steps % agent.update_target_Q == 0):
-            print("update target network")
-            agent.target_Q.set_weights(agent.Q.get_weights())
+        #if(agent.time_steps % agent.update_target_Q == 0):
+            #print("update target network")
+            #agent.target_Q.set_weights(agent.Q.get_weights())
 
         '''
         if(agent.initial_move):

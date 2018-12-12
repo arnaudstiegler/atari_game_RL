@@ -46,7 +46,7 @@ class DQL_agent():
         self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 500
+        self.update_target_Q = 2000
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
