@@ -47,7 +47,7 @@ class DQL_agent():
         self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 1000
+        self.update_target_Q = 2000
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
@@ -99,9 +99,6 @@ class DQL_agent():
             if self.epsilon > self.final_epsilon:
                 self.epsilon += self.epsilon_decay
 
-            return self.Q.history['loss']
-        else:
-            return None
 
 
     def act(self,state):
@@ -136,7 +133,7 @@ class DQL_agent():
 
 
     def check_learning(self,env,ep):
-        if(ep % 25 == 0 ):
+        if(ep % 100 == 0 ):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
             timesteps = self.time_steps

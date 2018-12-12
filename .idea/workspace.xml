@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e680ec4f-bcda-414e-8346-4fc5784f3bff" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/results/my_model.h5" afterPath="$PROJECT_DIR$/ram_breakout/results/my_model.h5" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/DQL.py" afterPath="$PROJECT_DIR$/ram_breakout/DQL.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/results/check_learning.txt" afterPath="$PROJECT_DIR$/ram_breakout/results/check_learning.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/results/epoch_rewards.txt" afterPath="$PROJECT_DIR$/ram_breakout/results/epoch_rewards.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/train_agent.py" afterPath="$PROJECT_DIR$/ram_breakout/train_agent.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,8 +29,8 @@
       <file leaf-file-name="train_agent.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ram_breakout/train_agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="98" column="8" lean-forward="false" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="8" />
+            <state relative-caret-position="215">
+              <caret line="97" column="35" lean-forward="false" selection-start-line="97" selection-start-column="35" selection-end-line="97" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -39,8 +39,8 @@
       <file leaf-file-name="DQL.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ram_breakout/DQL.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-168">
-              <caret line="57" column="23" lean-forward="false" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
+            <state relative-caret-position="600">
+              <caret line="45" column="33" lean-forward="true" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -111,8 +111,8 @@
         <option value="$PROJECT_DIR$/ram_breakout/test_agent.py" />
         <option value="$PROJECT_DIR$/ram_breakout/results/epoch_rewards.txt" />
         <option value="$PROJECT_DIR$/ram_Pong/train_agent.py" />
-        <option value="$PROJECT_DIR$/ram_breakout/DQL.py" />
         <option value="$PROJECT_DIR$/ram_breakout/train_agent.py" />
+        <option value="$PROJECT_DIR$/ram_breakout/DQL.py" />
       </list>
     </option>
   </component>
@@ -529,14 +529,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cartpole_v1/test_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ram_breakout/results/epoch_rewards.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -577,18 +569,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cartpole_v1/test_agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ram_breakout/DQL.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-168">
-          <caret line="57" column="23" lean-forward="false" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
+        <state relative-caret-position="600">
+          <caret line="45" column="33" lean-forward="true" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ram_breakout/train_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="98" column="8" lean-forward="false" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="8" />
+        <state relative-caret-position="215">
+          <caret line="97" column="35" lean-forward="false" selection-start-line="97" selection-start-column="35" selection-end-line="97" selection-end-column="35" />
           <folding />
         </state>
       </provider>
