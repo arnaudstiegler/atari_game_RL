@@ -6,7 +6,7 @@ import time
 from utils import normalize
 import keras
 
-env_to_use = 'Breakout-ram-v0'
+env_to_use = 'Breakout-ram-v4'
 
 # game parameters
 env = gym.make(env_to_use)

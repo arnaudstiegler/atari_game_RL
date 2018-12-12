@@ -145,6 +145,7 @@ class DQL_agent():
             for it in range(20):
 
                 s_t = env.reset()
+                s_t,a,b,c= env.step(1) #Throwing the ball
                 done=False
                 total_reward = 0
                 ep_steps = 0

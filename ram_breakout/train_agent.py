@@ -4,7 +4,7 @@ import timeit
 from utils import normalize
 import numpy as np
 
-env_to_use = 'Breakout-ram-v0'
+env_to_use = 'Breakout-ram-v4'
 
 # game parameters
 env = gym.make(env_to_use)
@@ -75,6 +75,12 @@ while(True):
     #In Keras, need to reshape
     s_t = np.apply_along_axis(normalize, 0, s_t)
     s_t = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
+
+    #We force the game to start directly
+    s_t,a,b,c = env.step(1)
+
+    s_t = np.apply_along_axis(normalize, 0, s_t)
+    s_t = s_t.reshape(1, s_t.shape[0])
 
     #Max number of rounds for one episode
     while(done is False):
