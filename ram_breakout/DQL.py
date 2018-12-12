@@ -17,7 +17,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 200000
+        self.explore = 500000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.05
 
@@ -25,7 +25,7 @@ class DQL_agent():
         self.gamma = 0.99
 
         #Memory replay parameters
-        self.memory_size = 100000
+        self.memory_size = 500000
         # Format of an experience is: (state,previous_state,action,reward)
         self.memory = deque([], self.memory_size)
 
@@ -55,7 +55,7 @@ class DQL_agent():
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
         #Saving model
-        self.backup = 1000
+        self.backup = 5000
 
     def reinitialize_agent(self):
         #This function is actually useless
@@ -98,6 +98,10 @@ class DQL_agent():
             self.Q.fit(np.array(state_batch).reshape((self.experience_batch_size,self.state_space)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), epochs=1, verbose=0)
             if self.epsilon > self.final_epsilon:
                 self.epsilon += self.epsilon_decay
+
+            return self.Q.history['loss']
+        else:
+            return None
 
 
     def act(self,state):

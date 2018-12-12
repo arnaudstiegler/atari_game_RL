@@ -4,6 +4,7 @@ import DQL
 import timeit
 import time
 from utils import normalize
+import keras
 
 env_to_use = 'Breakout-ram-v0'
 
@@ -43,8 +44,8 @@ action=4 -> going left no fire
 #We initialize our agent
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
-#agent.Q = load_model('results/my_model.h5')
-agent.Q.load_weights('results/dqn.h5')
+agent.Q.load_model('results/my_model.h5')
+#agent.Q.load_weights('results/my_model.h5')
 agent.epsilon=0.05
 agent.explore = 1
 

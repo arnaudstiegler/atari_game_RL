@@ -96,7 +96,8 @@ while(True):
         agent.previous_state = s_t
         agent.state = s_t1
         agent.add_to_memory(agent.previous_state,action,reward,agent.state,done)
-        agent.experience_replay()
+        loss = agent.experience_replay()
+        print(loss)
 
         if(agent.time_steps % agent.backup == 0):
             # We backup the model
@@ -111,7 +112,7 @@ while(True):
     end = timeit.default_timer()
     avg_timestep_s = float(steps_in_ep) / (end-start)
 
-    print("episode: {}, score = {}, time = {:0.2f}, epsilon = {}".format(ep,total_reward,avg_timestep_s,agent.epsilon))
+    print("episode: {}, score = {}, time = {:0.2f}, epsilon = {}, timestep = {}".format(ep,total_reward,avg_timestep_s,agent.epsilon,agent.time_steps))
     reward_list.append(total_reward)
     eps_length_list.append(steps_in_ep)
 
