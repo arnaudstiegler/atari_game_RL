@@ -30,7 +30,7 @@ class DQL_agent():
         self.memory = deque([], self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 0.001
+        self.learning_rate_cnn = 0.0001
         self.Q = self._build_model()
         self.target_Q = self._build_model()
         #So that both networks start with the same weights

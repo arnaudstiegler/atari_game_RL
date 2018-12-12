@@ -46,9 +46,6 @@ ep = 0
 
 while(True):
 
-
-    start = timeit.default_timer()
-
     total_reward = 0
     steps_in_ep = 0
 
@@ -71,6 +68,7 @@ while(True):
 
     fire_action_count = 0
 
+    start = timeit.default_timer()
     #Max number of rounds for one episode
     while(done is False):
         #env.render()
@@ -83,7 +81,6 @@ while(True):
         #if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
             #print("update target network")
             #agent.target_Q.set_weights(agent.Q.get_weights())
-
         action = agent.act(s_t)
 
         if(action == 1):
