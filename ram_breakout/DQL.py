@@ -17,7 +17,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 100000
+        self.explore = 500000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.05
 
@@ -25,7 +25,7 @@ class DQL_agent():
         self.gamma = 0.99
 
         #Memory replay parameters
-        self.memory_size = 250000
+        self.memory_size = 500000
         # Format of an experience is: (state,previous_state,action,reward)
         self.memory = deque([], self.memory_size)
 
@@ -47,7 +47,7 @@ class DQL_agent():
         self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 1000
+        self.update_target_Q = 2000
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
