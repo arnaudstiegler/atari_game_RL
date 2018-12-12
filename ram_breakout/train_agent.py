@@ -82,6 +82,8 @@ while(True):
     s_t = np.apply_along_axis(normalize, 0, s_t)
     s_t = s_t.reshape(1, s_t.shape[0])
 
+    fire_action_count = 0
+
     #Max number of rounds for one episode
     while(done is False):
         #env.render()
@@ -96,6 +98,10 @@ while(True):
             agent.target_Q.set_weights(agent.Q.get_weights())
 
         action = agent.act(s_t)
+
+        if(action == 1):
+            fire_action_count +=1
+
         new_state,reward,done,_info = env.step(action)
         s_t1 = new_state.reshape(1, new_state.shape[0])
 
@@ -117,7 +123,7 @@ while(True):
     end = timeit.default_timer()
     avg_timestep_s = float(steps_in_ep) / (end-start)
 
-    print("episode: {}, score = {}, time = {:0.2f}, epsilon = {}, timestep = {}".format(ep,total_reward,avg_timestep_s,agent.epsilon,agent.time_steps))
+    print("episode: {}, score = {}, time = {:0.2f}, #fire_action = {}, epsilon = {}, timestep = {}".format(ep,total_reward,avg_timestep_s,fire_action_count,agent.epsilon,agent.time_steps))
     reward_list.append(total_reward)
     eps_length_list.append(steps_in_ep)
 
