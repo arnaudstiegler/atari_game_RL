@@ -96,8 +96,7 @@ while(True):
         agent.previous_state = s_t
         agent.state = s_t1
         agent.add_to_memory(agent.previous_state,action,reward,agent.state,done)
-        loss = agent.experience_replay()
-        print(loss)
+        agent.experience_replay()
 
         if(agent.time_steps % agent.backup == 0):
             # We backup the model
