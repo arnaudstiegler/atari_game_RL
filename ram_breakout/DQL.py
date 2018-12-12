@@ -55,7 +55,7 @@ class DQL_agent():
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
         #Saving model
-        self.backup = 5
+        self.backup = 5000
 
     def reinitialize_agent(self):
         #This function is actually useless

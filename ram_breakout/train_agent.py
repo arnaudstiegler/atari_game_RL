@@ -46,10 +46,8 @@ ep = 0
 
 while(True):
 
-    #print("---- Currently running episode " +str(ep))
-    start = timeit.default_timer()
 
-    #print('epsilon value: ' + str(agent.epsilon))
+    start = timeit.default_timer()
 
     total_reward = 0
     steps_in_ep = 0
