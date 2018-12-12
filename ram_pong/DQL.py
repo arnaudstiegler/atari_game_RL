@@ -133,7 +133,7 @@ class DQL_agent():
 
 
     def check_learning(self,env,ep):
-        if(self.time_steps % 10000 == 0 ):
+        if(ep % 50 == 0 ):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
             timesteps = self.time_steps

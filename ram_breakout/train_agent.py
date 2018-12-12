@@ -9,6 +9,7 @@ env_to_use = 'Breakout-ram-v4'
 # game parameters
 env = gym.make(env_to_use)
 env.frameskip = 4 #We do the same action for the next 4 frames
+env._max_episode_steps=1000
 
 #state_space = env.observation_space #Format: Box(250, 160, 3)
 #action_space = env.action_space #Format: Discrete(3)
@@ -81,9 +82,9 @@ while(True):
             break
 
         #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL
-        if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
-            print("update target network")
-            agent.target_Q.set_weights(agent.Q.get_weights())
+        #if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
+            #print("update target network")
+            #agent.target_Q.set_weights(agent.Q.get_weights())
 
         action = agent.act(s_t)
 

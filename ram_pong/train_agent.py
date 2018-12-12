@@ -10,7 +10,7 @@ env_to_use = 'Pong-ram-v4'
 env = gym.make(env_to_use)
 
 env.frameskip = 4 #We do the same action for the next 5 frames
-
+env._max_episode_steps = 1000
 
 '''
 
@@ -48,9 +48,9 @@ while(True):
     total_reward = 0
     steps_in_ep = 0
 
-    agent.check_learning(env, ep)
-
     done = False
+
+    agent.check_learning(env, ep)
 
     # Initial state
     s_t = env.reset() #Observation is array (128)
@@ -63,9 +63,9 @@ while(True):
     while(done is False):
 
         #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL
-        if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
-            print("update target network")
-            agent.target_Q.set_weights(agent.Q.get_weights())
+        #if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
+            #print("update target network")
+            #agent.target_Q.set_weights(agent.Q.get_weights())
 
         action = agent.act(s_t)
 
