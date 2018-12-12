@@ -6,17 +6,17 @@ import time
 from utils import normalize
 from keras.models import load_model
 
-env_to_use = 'Breakout-ram-v4'
+env_to_use = 'Pong-ram-v4'
 
 # game parameters
 env = gym.make(env_to_use)
 env.frameskip = 4 #We do the same action for the next 4 frames
-print(env.unwrapped.get_action_meanings())
+
 
 #state_space = env.observation_space #Format: Box(250, 160, 3)
 #action_space = env.action_space #Format: Discrete(3)
 state_space = 128
-action_space = 4
+action_space = 6
 
 
 import gym
@@ -32,7 +32,6 @@ from keras.models import load_model
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 agent.Q = load_model('results/my_model.h5')
-#agent.Q.load_weights('results/dqn.h5')
 agent.epsilon=0.0
 agent.explore = 1
 
@@ -55,21 +54,10 @@ for ep in range(100):
     s_t = np.apply_along_axis(normalize, 0, s_t)
     s_t = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
-    # We force the game to start directly
-    s_t, a, b, c = env.step(1)
-
-    s_t = np.apply_along_axis(normalize, 0, s_t)
-    s_t = s_t.reshape(1, s_t.shape[0])
-    #state = process_obs(obs)#to create a batch with only one observation
     done=False
 
     #Max number of rounds for one episode
     while(done is False):
-        time.sleep(.05)
-
-        # FOR TRAINING, WE STOP EACH EPISODE AFTER ONE LIFE IS LOST
-        if (env.env.ale.lives() < 5):
-            break
 
         action = agent.act(s_t)
         new_state,reward,done,_info = env.step(action)
@@ -89,10 +77,6 @@ for ep in range(100):
     print("agent epsilon: " + str(agent.epsilon))
     reward_list.append(total_reward)
     eps_length_list.append(steps_in_ep)
-
-    #We backup the rewards
-    #np.savetxt("rewards_dqn", reward_list)
-    #np.savetxt("steps_dqn", eps_length_list)
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")

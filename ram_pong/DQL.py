@@ -55,7 +55,7 @@ class DQL_agent():
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
         #Saving model
-        self.backup = 5
+        self.backup = 5000
 
     def reinitialize_agent(self):
         #This function is actually useless
@@ -133,7 +133,7 @@ class DQL_agent():
 
 
     def check_learning(self,env,ep):
-        if(ep % 100 == 0 ):
+        if(self.time_steps % 10000 == 0 ):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
             timesteps = self.time_steps
@@ -154,10 +154,6 @@ class DQL_agent():
 
                 while(done==False):
 
-                    # FOR TRAINING, WE STOP EACH EPISODE AFTER ONE LIFE IS LOST
-                    if (env.env.ale.lives() < 5):
-                        break
-
                     action = self.act(self.state)
                     new_state, reward, done, _info = env.step(action)
 
@@ -170,7 +166,7 @@ class DQL_agent():
                 rewards.append(total_reward)
 
             with open('results/check_learning.txt','a') as file:
-                file.write(str(ep) + "," + str(np.mean(rewards))+'\n')
+                file.write(str(timesteps) + "," + str(np.mean(rewards))+'\n')
 
             self.time_steps = timesteps
             self.epsilon = epsilon
