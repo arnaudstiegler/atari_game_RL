@@ -55,7 +55,7 @@ class DQL_agent():
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
         #Saving model
-        self.backup = 5000
+        self.backup = 10
 
     def reinitialize_agent(self):
         #This function is actually useless
@@ -119,9 +119,6 @@ class DQL_agent():
                 target_batch.append(target_f)
                 state_batch.append(state)
 
-            print(len(state_batch))
-            print(np.count_nonzero(state_batch[0]))
-
             self.Q.fit(np.array(state_batch).reshape((32,4,84,84)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), epochs=1, verbose=0)
             if self.epsilon > self.final_epsilon:
                 self.epsilon += self.epsilon_decay
@@ -154,7 +151,6 @@ class DQL_agent():
 
 
 
-
     def add_to_memory(self,state,action,reward,next_state,done):
         self.memory.append((state, action, reward, next_state, done))
 
@@ -171,24 +167,22 @@ class DQL_agent():
 
             for it in range(20):
 
-                s_t = env.reset()
-                s_t,a,b,c= env.step(1) #Throwing the ball
+                # Initial state
+                s_t = np.array(env.reset())  # Observation is array (128)
                 done=False
                 total_reward = 0
                 ep_steps = 0
-                # In Keras, need to reshape
-                self.state = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
-                while(done==False):
+                while (done is False):
 
-                    # FOR TRAINING, WE STOP EACH EPISODE AFTER ONE LIFE IS LOST
-                    if (env.env.ale.lives() < 5):
-                        break
-
-                    action = self.act(self.state)
+                    action = self.act(s_t)
                     new_state, reward, done, _info = env.step(action)
+                    s_t1 = np.array(new_state)
 
-                    self.state = new_state.reshape(1, new_state.shape[0])
+                    self.previous_state = s_t
+                    self.state = s_t1
+                    s_t = s_t1
+                    self.previous_state = s_t1
                     total_reward += reward
                     ep_steps += 1
 

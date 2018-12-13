@@ -7,11 +7,8 @@ import atari_wrapper
 env_to_use = 'BreakoutDeterministic-v4'
 
 # game parameters
-#env = gym.make(env_to_use)
 env = atari_wrapper.make_atari(env_to_use)
 env = atari_wrapper.wrap_deepmind(env,episode_life=True, clip_rewards=False, frame_stack=True, scale=True)
-#env.frameskip = 5 #We do the same action for the next 4 frames
-#env._max_episode_steps=1000
 
 state_space = env.observation_space #Format: Box(250, 160, 3)
 action_space = env.action_space #Format: Discrete(3)
@@ -72,7 +69,7 @@ while(True):
             #agent.target_Q.set_weights(agent.Q.get_weights())
 
         action = agent.act(s_t)
-        new_state,reward,done,_info = env.step(1)
+        new_state,reward,done,_info = env.step(action)
         s_t1 = np.array(new_state)
 
         agent.previous_state = s_t
