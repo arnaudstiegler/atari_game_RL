@@ -91,7 +91,7 @@ class DQL_agent():
 
 
     def experience_replay(self):
-        if (len(self.memory) > 10000): #We populate the memory before starting
+        if (len(self.memory) > 32): #We populate the memory before starting
 
             minibatch = random.sample(self.memory,self.experience_batch_size)
             state_batch = []
@@ -108,7 +108,7 @@ class DQL_agent():
                 target_batch.append(target_f)
                 state_batch.append(state)
 
-            self.Q.fit(np.array(state_batch).reshape((32,84,84,4)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), epochs=1, verbose=0)
+            self.Q.fit(np.array(state_batch).reshape((32,84,84,4)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), nb_epoch=1, verbose=0)
             if self.epsilon > self.final_epsilon:
                 self.epsilon += self.epsilon_decay
 
