@@ -30,7 +30,7 @@ class DQL_agent():
         self.memory = deque([], self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 0.0001
+        self.learning_rate_cnn = 0.001
         self.Q = self._build_model()
         self.target_Q = self._build_model()
         #So that both networks start with the same weights
@@ -46,7 +46,7 @@ class DQL_agent():
         self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 2000
+        self.update_target_Q = 500
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay

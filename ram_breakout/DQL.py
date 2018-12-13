@@ -47,7 +47,7 @@ class DQL_agent():
         self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 3000
+        self.update_target_Q = 1000
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
@@ -89,7 +89,7 @@ class DQL_agent():
 
                 target = reward
                 if not done:
-                    target = reward + self.gamma * np.amax(self.target_Q.predict(next_state)[0])
+                    target = reward + self.gamma * np.amax(self.Q.predict(next_state)[0])
                 target_f = self.Q.predict(state)
                 target_f[0][action] = target
 
