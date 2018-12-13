@@ -8,7 +8,7 @@ env_to_use = 'BreakoutDeterministic-v4'
 
 # game parameters
 env = atari_wrapper.make_atari(env_to_use)
-env = atari_wrapper.wrap_deepmind(env,episode_life=True, clip_rewards=False, frame_stack=True, scale=True)
+env = atari_wrapper.wrap_deepmind(env,episode_life=True, clip_rewards=False, frame_stack=True, scale=False)
 
 state_space = env.observation_space #Format: Box(250, 160, 3)
 action_space = env.action_space #Format: Discrete(3)
@@ -51,18 +51,18 @@ while(True):
     total_reward = 0
     steps_in_ep = 0
 
-    #agent.check_learning(env, ep)
+    agent.check_learning(env, ep)
 
     done = False
 
     # Initial state
-    s_t = np.array(env.reset()) #Observation is array (128)
-    s_t = s_t
+    s_t = np.array(env.reset()) #Observation is array (4,84,84)
     start = timeit.default_timer()
 
     while(done is False):
         #env.render()
 
+        #FOR DDQN
         #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL
         #if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
             #print("update target network")

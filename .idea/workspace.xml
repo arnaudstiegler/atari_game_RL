@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e680ec4f-bcda-414e-8346-4fc5784f3bff" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/img_breakout/train_agent_old.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/results/my_model.h5" afterPath="$PROJECT_DIR$/img_breakout/results/my_model.h5" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/DQL.py" afterPath="$PROJECT_DIR$/img_breakout/DQL.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/results/epoch_rewards.txt" afterPath="$PROJECT_DIR$/img_breakout/results/epoch_rewards.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/test_agent.py" afterPath="$PROJECT_DIR$/img_breakout/test_agent.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/train_agent.py" afterPath="$PROJECT_DIR$/img_breakout/train_agent.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/results/check_learning.txt" afterPath="$PROJECT_DIR$/ram_breakout/results/check_learning.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/results/epoch_rewards.txt" afterPath="$PROJECT_DIR$/ram_breakout/results/epoch_rewards.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/train_agent.py" afterPath="$PROJECT_DIR$/ram_breakout/train_agent.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,47 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DQL.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/img_breakout/DQL.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
-              <caret line="57" column="24" lean-forward="false" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_agent.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/img_breakout/test_agent.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/img_breakout/utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="train_agent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/img_breakout/train_agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="16" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="19" selection-end-column="16" />
+            <state relative-caret-position="259">
+              <caret line="20" column="0" lean-forward="true" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="11" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -69,13 +35,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="atari_wrapper.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/img_breakout/atari_wrapper.py">
+      <file leaf-file-name="DQL.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/img_breakout/DQL.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3435">
-              <caret line="229" column="23" lean-forward="true" selection-start-line="229" selection-start-column="23" selection-end-line="229" selection-end-column="91" />
+            <state relative-caret-position="340">
+              <caret line="95" column="78" lean-forward="false" selection-start-line="95" selection-start-column="78" selection-end-line="95" selection-end-column="78" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#0#29#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -151,12 +117,12 @@
         <option value="$PROJECT_DIR$/cartpole_v1/train_agent.py" />
         <option value="$PROJECT_DIR$/cartpole_v1/DQL.py" />
         <option value="$PROJECT_DIR$/ram_breakout/DQL.py" />
-        <option value="$PROJECT_DIR$/ram_breakout/train_agent.py" />
         <option value="$PROJECT_DIR$/img_breakout/utils.py" />
         <option value="$PROJECT_DIR$/img_breakout/atari_wrapper.py" />
-        <option value="$PROJECT_DIR$/img_breakout/DQL.py" />
-        <option value="$PROJECT_DIR$/img_breakout/train_agent.py" />
         <option value="$PROJECT_DIR$/img_breakout/test_agent.py" />
+        <option value="$PROJECT_DIR$/ram_breakout/train_agent.py" />
+        <option value="$PROJECT_DIR$/img_breakout/train_agent.py" />
+        <option value="$PROJECT_DIR$/img_breakout/DQL.py" />
       </list>
     </option>
   </component>
@@ -199,6 +165,11 @@
               <item name="img_breakout" type="462c0819:PsiDirectoryNode" />
               <item name="results" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="project_rl" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project_rl" type="462c0819:PsiDirectoryNode" />
+              <item name="ram_breakout" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -237,7 +208,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test_agent (1)">
+  <component name="RunManager" selected="Python.train_agent (2)">
     <configuration name="atari_wrapper" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -332,11 +303,11 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.test_agent (1)" />
-        <item index="1" class="java.lang.String" itemvalue="Python.train_agent (2)" />
-        <item index="2" class="java.lang.String" itemvalue="Python.atari_wrapper" />
-        <item index="3" class="java.lang.String" itemvalue="Python.train_agent" />
-        <item index="4" class="java.lang.String" itemvalue="Python.train_agent (1)" />
+        <item index="0" class="java.lang.String" itemvalue="Python.train_agent (2)" />
+        <item index="1" class="java.lang.String" itemvalue="Python.train_agent (1)" />
+        <item index="2" class="java.lang.String" itemvalue="Python.test_agent (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python.atari_wrapper" />
+        <item index="4" class="java.lang.String" itemvalue="Python.train_agent" />
       </list>
     </recent_temporary>
   </component>
@@ -371,7 +342,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.503231" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32737276" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35900962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35900962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32599726" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16235864" sideWeight="0.50858366" order="2" side_tool="true" content_ui="tabs" />
@@ -416,13 +387,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/gym/spaces/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mountain_car/setup">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -637,6 +601,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/img_breakout/results/check_learning.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img_breakout/test_agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img_breakout/atari_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="229" column="23" lean-forward="true" selection-start-line="229" selection-start-column="23" selection-end-line="229" selection-end-column="91" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/img_breakout/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -647,58 +639,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img_breakout/atari_wrapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3435">
-          <caret line="229" column="23" lean-forward="true" selection-start-line="229" selection-start-column="23" selection-end-line="229" selection-end-column="91" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ram_breakout/train_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="82" column="12" lean-forward="false" selection-start-line="82" selection-start-column="12" selection-end-line="82" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ram_breakout/DQL.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
+        <state relative-caret-position="1173">
           <caret line="149" column="0" lean-forward="false" selection-start-line="149" selection-start-column="0" selection-end-line="151" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img_breakout/DQL.py">
+    <entry file="file://$PROJECT_DIR$/ram_breakout/train_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="57" column="24" lean-forward="false" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="360">
+          <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/img_breakout/train_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="16" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="19" selection-end-column="16" />
+        <state relative-caret-position="259">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="11" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img_breakout/test_agent.py">
+    <entry file="file://$PROJECT_DIR$/img_breakout/DQL.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="340">
+          <caret line="95" column="78" lean-forward="false" selection-start-line="95" selection-start-column="78" selection-end-line="95" selection-end-column="78" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>

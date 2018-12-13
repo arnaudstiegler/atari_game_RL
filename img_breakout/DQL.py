@@ -25,12 +25,12 @@ class DQL_agent():
         self.gamma = 0.99
 
         #Memory replay parameters
-        self.memory_size = 250000
+        self.memory_size = 1000000
         # Format of an experience is: (state,previous_state,action,reward)
         self.memory = deque([], self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 0.0001
+        self.learning_rate = 0.0001
         self.Q = self._build_model()
         self.use_target = True
         self.target_Q = self._build_model()
@@ -47,7 +47,7 @@ class DQL_agent():
         self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 1000
+        self.update_target_Q = 5000
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
@@ -55,7 +55,7 @@ class DQL_agent():
         #A counter of the number of steps since last experience replay
         self.time_steps = 0
         #Saving model
-        self.backup = 10
+        self.backup = 1000
 
     def reinitialize_agent(self):
         #This function is actually useless
@@ -66,29 +66,22 @@ class DQL_agent():
     def _build_model(self):
 
         model = Sequential()
-        model.add(Conv2D(32,
+        model.add(Conv2D(16,
                               8,
                               strides=(4, 4),
                               padding="valid",
                               activation="relu",
                               input_shape=self.state_space,
                               data_format="channels_first"))
-        model.add(Conv2D(64,
+        model.add(Conv2D(32,
                               4,
                               strides=(2, 2),
                               padding="valid",
                               activation="relu",
                               input_shape=self.state_space,
                               data_format="channels_first"))
-        model.add(Conv2D(64,
-                              3,
-                              strides=(1, 1),
-                              padding="valid",
-                              activation="relu",
-                              input_shape=self.state_space,
-                              data_format="channels_first"))
         model.add(Flatten())
-        model.add(Dense(512, activation="relu"))
+        model.add(Dense(256, activation="relu"))
         model.add(Dense(self.action_space))
         model.compile(loss="mean_squared_error",
                            optimizer=RMSprop(lr=0.00025,
@@ -100,15 +93,13 @@ class DQL_agent():
 
 
     def experience_replay(self):
-        if (len(self.memory) > self.experience_batch_size):
+        if (len(self.memory) > 10000): #We populate the memory before starting
 
             minibatch = random.sample(self.memory,self.experience_batch_size)
-
             state_batch = []
             target_batch = []
 
             for state,action,reward,next_state,done in minibatch:
-
 
                 target = reward
                 if not done:
@@ -139,7 +130,7 @@ class DQL_agent():
                 '''
 
         # We have done an additional step
-        self.time_steps += 1
+        self.time_steps += 4 # +4 since we skip 4 frames each time (probable boundary effects that makes it a rough estimate of the actual timestep
 
         random_float = np.random.random()
         if (random_float < self.epsilon):

@@ -8,7 +8,7 @@ env_to_use = 'Breakout-ram-v4'
 
 # game parameters
 env = gym.make(env_to_use)
-env.frameskip = 4 #We do the same action for the next 4 frames
+#env.frameskip = 4 #We do the same action for the next 4 frames
 env._max_episode_steps=1000
 
 #state_space = env.observation_space #Format: Box(250, 160, 3)
