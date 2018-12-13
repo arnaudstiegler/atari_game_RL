@@ -67,19 +67,17 @@ class DQL_agent():
 
         model = Sequential()
         model.add(Conv2D(16,
-                              8,
-                              strides=(4, 4),
-                              padding="valid",
+                              8,8,
+                              subsample=(4, 4),
                               activation="relu",
-                              input_shape=self.state_space,
-                              data_format="channels_first"))
+                                border_mode='valid',
+                              input_shape=(84,84,4,)))
         model.add(Conv2D(32,
-                              4,
-                              strides=(2, 2),
-                              padding="valid",
+                              4,4,
+                              subsample=(2, 2),
                               activation="relu",
-                              input_shape=self.state_space,
-                              data_format="channels_first"))
+                            border_mode='valid',
+                              input_shape=self.state_space))
         model.add(Flatten())
         model.add(Dense(256, activation="relu"))
         model.add(Dense(self.action_space))
@@ -103,14 +101,14 @@ class DQL_agent():
 
                 target = reward
                 if not done:
-                    target = reward + self.gamma * np.amax(self.Q.predict(next_state.reshape(1,4,84,84))[0])
-                target_f = self.Q.predict(state.reshape(1,4,84,84))
+                    target = reward + self.gamma * np.amax(self.Q.predict(next_state.reshape(1,84,84,4))[0])
+                target_f = self.Q.predict(state.reshape(1,84,84,4))
                 target_f[0][action] = target
 
                 target_batch.append(target_f)
                 state_batch.append(state)
 
-            self.Q.fit(np.array(state_batch).reshape((32,4,84,84)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), epochs=1, verbose=0)
+            self.Q.fit(np.array(state_batch).reshape((32,84,84,4)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), epochs=1, verbose=0)
             if self.epsilon > self.final_epsilon:
                 self.epsilon += self.epsilon_decay
 
@@ -137,7 +135,7 @@ class DQL_agent():
             return np.random.randint(self.action_space)
         else:
             # array of q(state,action) for all action
-            return np.argmax(self.Q.predict(state.reshape((1,4,84,84)))[0])
+            return np.argmax(self.Q.predict(state.reshape((1,84,84,4)))[0])
 
 
 
