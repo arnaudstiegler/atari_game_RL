@@ -10,8 +10,8 @@ env_to_use = 'Breakout-ram-v4'
 
 # game parameters
 env = gym.make(env_to_use)
-env.frameskip = 4 #We do the same action for the next 4 frames
-print(env.unwrapped.get_action_meanings())
+env.env.frameskip = 4 #We do the same action for the next 4 frames
+
 
 #state_space = env.observation_space #Format: Box(250, 160, 3)
 #action_space = env.action_space #Format: Discrete(3)
@@ -89,10 +89,6 @@ for ep in range(100):
     print("agent epsilon: " + str(agent.epsilon))
     reward_list.append(total_reward)
     eps_length_list.append(steps_in_ep)
-
-    #We backup the rewards
-    #np.savetxt("rewards_dqn", reward_list)
-    #np.savetxt("steps_dqn", eps_length_list)
 
     end = timeit.default_timer()
     print("Episode took " + str((end-start)) + " seconds")

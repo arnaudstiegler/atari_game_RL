@@ -1,10 +1,10 @@
 from collections import deque
 import numpy as np
 import random
-from keras.layers import Dense,Activation
+from keras.layers import Dense,Dropout
 from keras.models import Sequential
 from keras.optimizers import Adam,RMSprop
-
+from utils import normalize
 
 class DQL_agent():
 
@@ -17,7 +17,7 @@ class DQL_agent():
         #Learning parameters
         self.epsilon = 1.0
         #Number of time steps over which the agent will explore
-        self.explore = 500000
+        self.explore = 1000000
         #Final value for epsilon (once exploration is finished)
         self.final_epsilon = 0.05
 
@@ -30,7 +30,7 @@ class DQL_agent():
         self.memory = deque([], self.memory_size)
 
         #Parameters for the CNN
-        self.learning_rate_cnn = 0.0001
+        self.learning_rate_cnn = 0.00025
         self.Q = self._build_model()
         self.use_target = True
         self.target_Q = self._build_model()
@@ -66,37 +66,46 @@ class DQL_agent():
     def _build_model(self):
 
         model = Sequential()
-        model.add(Dense(128,input_dim=(self.state_space),activation='relu'))
+        model.add(Dropout(p=0.2, input_shape=(self.state_space,)))
         model.add(Dense(128,activation='relu'))
+        model.add(Dense(128,activation='relu'))
+        model.add(Dense(128, activation='relu'))
         model.add(Dense(self.action_space,activation='linear'))
         #adam = Adam(lr=self.learning_rate_cnn)
-        opt = RMSprop(lr=self.learning_rate_cnn, rho=0.9, epsilon=None, decay=0.0)
+        opt = RMSprop(lr=0.0025, rho=0.9, epsilon=0.01, decay=0.0)
         model.compile(loss='mse', optimizer=opt)
 
         return model
 
 
     def experience_replay(self):
-        if (len(self.memory) > self.experience_batch_size):
+        if (len(self.memory) > 1000):
 
             minibatch = random.sample(self.memory,self.experience_batch_size)
 
             state_batch = []
             target_batch = []
+            q_values = []
 
             for state,action,reward,next_state,done in minibatch:
 
 
                 target = reward
                 if not done:
-                    target = reward + self.gamma * np.amax(self.target_Q.predict(next_state)[0])
+                    q_next = np.amax(self.target_Q.predict(next_state)[0])
+                    q_values.append(q_next)
+                    target = reward + self.gamma * q_next
                 target_f = self.Q.predict(state)
                 target_f[0][action] = target
 
                 target_batch.append(target_f)
                 state_batch.append(state)
 
-            self.Q.fit(np.array(state_batch).reshape((self.experience_batch_size,self.state_space)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), epochs=1, verbose=0)
+            with open('results/q_values.txt','a') as file:
+                if(self.time_steps % 1000 == 0):
+                    file.write(str(self.time_steps) + "," + str(np.mean(np.array(q_values)))+'\n')
+
+            self.Q.fit(np.array(state_batch).reshape((self.experience_batch_size,self.state_space)),np.array(target_batch).reshape((self.experience_batch_size,self.action_space)), nb_epoch=1, verbose=0)
             if self.epsilon > self.final_epsilon:
                 self.epsilon += self.epsilon_decay
 
@@ -134,7 +143,7 @@ class DQL_agent():
 
 
     def check_learning(self,env,ep):
-        if(ep % 100 == 0 ):
+        if(ep % 500 == 0 ):
             print('---- CHECKING RESULTS ----')
             epsilon = self.epsilon
             timesteps = self.time_steps
@@ -151,7 +160,8 @@ class DQL_agent():
                 total_reward = 0
                 ep_steps = 0
                 # In Keras, need to reshape
-                self.state = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
+                self.state = np.apply_along_axis(normalize, 0, s_t)
+                self.state = self.state.reshape(1, self.state.shape[0])  # 1*80*80*4
 
                 while(done==False):
 
@@ -161,8 +171,9 @@ class DQL_agent():
 
                     action = self.act(self.state)
                     new_state, reward, done, _info = env.step(action)
+                    self.state = np.apply_along_axis(normalize, 0, new_state)
+                    self.state = self.state.reshape(1, self.state.shape[0])
 
-                    self.state = new_state.reshape(1, new_state.shape[0])
                     total_reward += reward
                     ep_steps += 1
 

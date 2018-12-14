@@ -2,6 +2,7 @@ import gym
 import numpy as np
 import DQL
 import timeit
+import time
 from keras.models import load_model
 import atari_wrapper
 
@@ -25,14 +26,13 @@ action_space = 4
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 agent.Q = load_model('results/my_model.h5')
 
-agent.epsilon=1.0
+agent.epsilon=0.05
 agent.explore = 1
 
 reward_list = []
 eps_length_list = []
 
 while(True):
-
     total_reward = 0
     steps_in_ep = 0
 
@@ -46,6 +46,7 @@ while(True):
     start = timeit.default_timer()
 
     while(done is False):
+        time.sleep(0.1)
         env.render()
 
         action = agent.act(s_t)

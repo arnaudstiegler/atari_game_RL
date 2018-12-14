@@ -8,9 +8,7 @@ env_to_use = 'Breakout-ram-v4'
 
 # game parameters
 env = gym.make(env_to_use)
-#env.frameskip = 4 #We do the same action for the next 4 frames
-env._max_episode_steps=1000
-
+env.env.frameskip = 4 #We do the same action for the next 4 frames
 #state_space = env.observation_space #Format: Box(250, 160, 3)
 #action_space = env.action_space #Format: Discrete(3)
 
@@ -35,12 +33,6 @@ agent = DQL_agent(state_space= state_space, action_space= action_space)
 reward_list = []
 eps_length_list = []
 
-#TODO: render into agent class
-#TODO: Check all parameters for Network/Learning
-#TODO: Check reward
-#TODO: Check TD target
-#TODO: add epochs count
-#TODO: add performance testing after each epoch
 
 ep = 0
 
@@ -56,11 +48,7 @@ while(True):
     # Initial state
     s_t = env.reset() #Observation is array (128)
 
-    #In Keras, need to reshape
-    s_t = np.apply_along_axis(normalize, 0, s_t)
-    s_t = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
-
-    #We force the game to start directly
+    #We force the game to start directly by firing the ball
     s_t,a,b,c = env.step(1)
 
     s_t = np.apply_along_axis(normalize, 0, s_t)
@@ -81,13 +69,14 @@ while(True):
         if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
             print("update target network")
             agent.target_Q.set_weights(agent.Q.get_weights())
-        action = agent.act(s_t)
 
+        action = agent.act(s_t)
         if(action == 1):
             fire_action_count +=1
 
         new_state,reward,done,_info = env.step(action)
-        s_t1 = new_state.reshape(1, new_state.shape[0])
+        s_t1 = np.apply_along_axis(normalize, 0, new_state)
+        s_t1 = s_t1.reshape(1, s_t1.shape[0])
 
         agent.previous_state = s_t
         agent.state = s_t1
