@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e680ec4f-bcda-414e-8346-4fc5784f3bff" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ram_breakout/results/check_learning.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ram_breakout/results/epoch_rewards.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ram_breakout/results/my_model.h5" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/results/my_model.h5" afterPath="$PROJECT_DIR$/img_breakout/results/my_model.h5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/results/check_learning.txt" afterPath="$PROJECT_DIR$/img_breakout/results/check_learning.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/results/epoch_rewards.txt" afterPath="$PROJECT_DIR$/img_breakout/results/epoch_rewards.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img_breakout/test_agent.py" afterPath="$PROJECT_DIR$/img_breakout/test_agent.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/DQL.py" afterPath="$PROJECT_DIR$/ram_breakout/DQL.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/test_agent.py" afterPath="$PROJECT_DIR$/ram_breakout/test_agent.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ram_breakout/train_agent.py" afterPath="$PROJECT_DIR$/ram_breakout/train_agent.py" />
-    </list>
+    <list default="true" id="e680ec4f-bcda-414e-8346-4fc5784f3bff" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,18 +17,18 @@
       <file leaf-file-name="train_agent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ram_breakout/train_agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5">
-              <caret line="78" column="57" lean-forward="false" selection-start-line="78" selection-start-column="57" selection-end-line="78" selection-end-column="57" />
+            <state relative-caret-position="171">
+              <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_agent.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_agent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ram_breakout/test_agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+            <state relative-caret-position="1260">
+              <caret line="90" column="39" lean-forward="false" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -56,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DQL.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DQL.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ram_breakout/DQL.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="75" column="38" lean-forward="true" selection-start-line="75" selection-start-column="38" selection-end-line="75" selection-end-column="38" />
+            <state relative-caret-position="700">
+              <caret line="94" column="50" lean-forward="false" selection-start-line="94" selection-start-column="42" selection-end-line="94" selection-end-column="50" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -150,11 +138,11 @@
         <option value="$PROJECT_DIR$/img_breakout/results/epoch_rewards.txt" />
         <option value="$PROJECT_DIR$/img_breakout/test_agent.py" />
         <option value="$PROJECT_DIR$/ram_breakout/results/q_values.txt" />
-        <option value="$PROJECT_DIR$/ram_breakout/train_agent.py" />
         <option value="$PROJECT_DIR$/ram_breakout/results/check_learning.txt" />
         <option value="$PROJECT_DIR$/ram_breakout/results/epoch_rewards.txt" />
         <option value="$PROJECT_DIR$/ram_breakout/DQL.py" />
         <option value="$PROJECT_DIR$/ram_breakout/test_agent.py" />
+        <option value="$PROJECT_DIR$/ram_breakout/train_agent.py" />
       </list>
     </option>
   </component>
@@ -362,16 +350,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16235864" sideWeight="0.4914163" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.503231" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32737276" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35900962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35900962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32599726" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32599726" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16235864" sideWeight="0.50858366" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39889959" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -685,29 +672,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ram_breakout/DQL.py">
+    <entry file="file://$PROJECT_DIR$/ram_breakout/test_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="75" column="38" lean-forward="true" selection-start-line="75" selection-start-column="38" selection-end-line="75" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1260">
+          <caret line="90" column="39" lean-forward="false" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ram_breakout/train_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5">
-          <caret line="78" column="57" lean-forward="false" selection-start-line="78" selection-start-column="57" selection-end-line="78" selection-end-column="57" />
+        <state relative-caret-position="171">
+          <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ram_breakout/test_agent.py">
+    <entry file="file://$PROJECT_DIR$/ram_breakout/DQL.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="700">
+          <caret line="94" column="50" lean-forward="false" selection-start-line="94" selection-start-column="42" selection-end-line="94" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
