@@ -92,7 +92,7 @@ class DQL_agent():
 
                 target = reward
                 if not done:
-                    q_next = np.amax(self.Q.predict(next_state)[0])
+                    q_next = np.amax(self.target_Q.predict(next_state)[0])
                     q_values.append(q_next)
                     target = reward + self.gamma * q_next
                 target_f = self.Q.predict(state)
