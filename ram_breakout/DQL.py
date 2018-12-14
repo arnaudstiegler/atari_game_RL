@@ -25,7 +25,7 @@ class DQL_agent():
         self.gamma = 0.99
 
         #Memory replay parameters
-        self.memory_size = 250000
+        self.memory_size = 500000
         # Format of an experience is: (state,previous_state,action,reward)
         self.memory = deque([], self.memory_size)
 
@@ -155,24 +155,17 @@ class DQL_agent():
             for it in range(20):
 
                 s_t = env.reset()
-                s_t,a,b,c= env.step(1) #Throwing the ball
                 done=False
                 total_reward = 0
                 ep_steps = 0
                 # In Keras, need to reshape
-                self.state = np.apply_along_axis(normalize, 0, s_t)
-                self.state = self.state.reshape(1, self.state.shape[0])  # 1*80*80*4
+                self.state = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
                 while(done==False):
 
-                    # FOR TRAINING, WE STOP EACH EPISODE AFTER ONE LIFE IS LOST
-                    if (env.env.ale.lives() < 5):
-                        break
-
                     action = self.act(self.state)
                     new_state, reward, done, _info = env.step(action)
-                    self.state = np.apply_along_axis(normalize, 0, new_state)
-                    self.state = self.state.reshape(1, self.state.shape[0])
+                    self.state = new_state.reshape(1, new_state.shape[0])
 
                     total_reward += reward
                     ep_steps += 1

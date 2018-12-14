@@ -1,16 +1,15 @@
-import gym
+from utils import normalize
 import numpy as np
 import DQL
 import timeit
 import time
-from utils import normalize
 from keras.models import load_model
+import atari_wrapper
 
 env_to_use = 'Breakout-ram-v4'
-
 # game parameters
-env = gym.make(env_to_use)
-env.env.frameskip = 4 #We do the same action for the next 4 frames
+env = atari_wrapper.make_atari(env_to_use)
+env = atari_wrapper.wrap_deepmind(env,episode_life=True, clip_rewards=False, frame_stack=False, scale=True)
 
 
 #state_space = env.observation_space #Format: Box(250, 160, 3)
@@ -19,21 +18,12 @@ state_space = 128
 action_space = 4
 
 
-import gym
-import numpy as np
-import DQL
-import timeit
-import time
-from keras.models import load_model
-
-
 
 #We initialize our agent
 
 agent = DQL.DQL_agent(state_space= state_space, action_space= action_space)
 agent.Q = load_model('results/my_model.h5')
-#agent.Q.load_weights('results/dqn.h5')
-agent.epsilon=0.0
+agent.epsilon=0.05
 agent.explore = 1
 
 reward_list = []
@@ -47,33 +37,20 @@ for ep in range(100):
     total_reward = 0
     steps_in_ep = 0
 
-    #agent.reinitialize_agent()
-
     s_t = env.reset()  # Observation is array (128)
 
     # In Keras, need to reshape
-    s_t = np.apply_along_axis(normalize, 0, s_t)
     s_t = s_t.reshape(1, s_t.shape[0])  # 1*80*80*4
 
-    # We force the game to start directly
-    s_t, a, b, c = env.step(1)
-
-    s_t = np.apply_along_axis(normalize, 0, s_t)
-    s_t = s_t.reshape(1, s_t.shape[0])
-    #state = process_obs(obs)#to create a batch with only one observation
     done=False
 
     #Max number of rounds for one episode
     while(done is False):
-        time.sleep(.05)
+        time.sleep(0.1)
 
-        # FOR TRAINING, WE STOP EACH EPISODE AFTER ONE LIFE IS LOST
-        if (env.env.ale.lives() < 5):
-            break
 
         action = agent.act(s_t)
         new_state,reward,done,_info = env.step(action)
-        new_state = np.apply_along_axis(normalize, 0, new_state)
         s_t1 = new_state.reshape(1, new_state.shape[0])
         agent.state = s_t1
 
