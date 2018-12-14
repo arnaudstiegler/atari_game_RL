@@ -66,8 +66,8 @@ class DQL_agent():
     def _build_model(self):
 
         model = Sequential()
-        model.add(Dropout(p=0.2, input_shape=(self.state_space,)))
-        model.add(Dense(128,activation='relu'))
+        #model.add(Dropout(p=0.2, input_shape=(self.state_space,)))
+        model.add(Dense(128,activation='relu',input_shape=(self.state_space,)))
         model.add(Dense(128,activation='relu'))
         model.add(Dense(128, activation='relu'))
         model.add(Dense(self.action_space,activation='linear'))
