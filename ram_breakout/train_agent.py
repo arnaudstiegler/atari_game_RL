@@ -5,7 +5,7 @@ import atari_wrapper
 env_to_use = 'Breakout-ram-v4'
 # game parameters
 env = atari_wrapper.make_atari(env_to_use)
-env = atari_wrapper.wrap_deepmind(env,episode_life=False, clip_rewards=False, frame_stack=False, scale=True)
+env = atari_wrapper.wrap_deepmind(env,episode_life=True, clip_rewards=False, frame_stack=False, scale=True)
 
 
 state_space = 128 # Using the ram input
