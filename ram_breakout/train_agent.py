@@ -51,9 +51,9 @@ while(True):
     while(done is False):
 
         #Comment/unComment to use DDQN instead of DQN
-        #if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
-            #print("update target network")
-            #agent.target_Q.set_weights(agent.Q.get_weights())
+        if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
+            print("update target network")
+            agent.target_Q.set_weights(agent.Q.get_weights())
 
         action = agent.act(s_t)
 
