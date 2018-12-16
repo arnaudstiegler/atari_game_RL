@@ -50,10 +50,10 @@ while(True):
     #Max number of rounds for one episode
     while(done is False):
 
-        #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL
-        if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
-            print("update target network")
-            agent.target_Q.set_weights(agent.Q.get_weights())
+        #Comment/unComment to use DDQN instead of DQN
+        #if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
+            #print("update target network")
+            #agent.target_Q.set_weights(agent.Q.get_weights())
 
         action = agent.act(s_t)
 
