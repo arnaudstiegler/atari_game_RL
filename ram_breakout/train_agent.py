@@ -1,14 +1,11 @@
-import gym
 from DQL import DQL_agent
 import timeit
-from utils import normalize
-import numpy as np
 import atari_wrapper
 
 env_to_use = 'Breakout-ram-v4'
 # game parameters
 env = atari_wrapper.make_atari(env_to_use)
-env = atari_wrapper.wrap_deepmind(env,episode_life=True, clip_rewards=False, frame_stack=False, scale=True)
+env = atari_wrapper.wrap_deepmind(env,episode_life=False, clip_rewards=False, frame_stack=False, scale=True)
 
 
 state_space = 128 # Using the ram input
@@ -54,9 +51,9 @@ while(True):
     while(done is False):
 
         #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL
-        if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
-            print("update target network")
-            agent.target_Q.set_weights(agent.Q.get_weights())
+        #if(agent.time_steps % agent.update_target_Q == 0 and agent.use_target):
+            #print("update target network")
+            #agent.target_Q.set_weights(agent.Q.get_weights())
 
         action = agent.act(s_t)
 

@@ -10,7 +10,7 @@ env_to_use = 'BreakoutDeterministic-v4'
 
 # game parameters
 env = atari_wrapper.make_atari(env_to_use)
-env = atari_wrapper.wrap_deepmind(env,episode_life=True, clip_rewards=False, frame_stack=True, scale=True)
+env = atari_wrapper.wrap_deepmind(env,episode_life=True, clip_rewards=False, frame_stack=True, scale=False)
 
 state_space = env.observation_space #Format: Box(250, 160, 3)
 action_space = env.action_space #Format: Discrete(3)
@@ -36,7 +36,6 @@ while(True):
     total_reward = 0
     steps_in_ep = 0
 
-    #agent.check_learning(env, ep)
 
     done = False
 
@@ -46,10 +45,11 @@ while(True):
     start = timeit.default_timer()
 
     while(done is False):
-        time.sleep(0.1)
+        time.sleep(0.2)
         env.render()
 
         action = agent.act(s_t)
+        print(action)
         new_state,reward,done,_info = env.step(action)
         s_t1 = np.array(new_state)
 

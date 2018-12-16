@@ -47,7 +47,7 @@ class DQL_agent():
         self.observe_steps = 1 #Number of steps for observation (no learning)
 
         #Update the target network every ...
-        self.update_target_Q = 1000
+        self.update_target_Q = 2000
         #Max number of steps between two experience replays
         self.experience_nb_steps=1 #We update at each step
         #Size of a batch for experience replay
@@ -72,7 +72,9 @@ class DQL_agent():
         model.add(Dense(128, activation='relu'))
         model.add(Dense(self.action_space,activation='linear'))
         #adam = Adam(lr=self.learning_rate_cnn)
-        opt = RMSprop(lr=0.0025, rho=0.9, epsilon=0.01, decay=0.0)
+        opt = RMSprop(lr=0.00025,
+                            rho=0.95,
+                            epsilon=0.01)
         model.compile(loss='mse', optimizer=opt)
 
         return model
