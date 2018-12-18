@@ -66,23 +66,28 @@ class DQL_agent():
     def _build_model(self):
 
         model = Sequential()
-        model.add(Conv2D(16,
+        model.add(Conv2D(32,
                               8,8,
                               subsample=(4, 4),
                               activation="relu",
                                 border_mode='valid',
                               input_shape=(84,84,4,)))
-        model.add(Conv2D(32,
+        model.add(Conv2D(64,
                               4,4,
                               subsample=(2, 2),
                               activation="relu",
                             border_mode='valid',
                               input_shape=self.state_space))
+        model.add(Conv2D(64,
+                         3, 3,
+                         subsample=(1, 1),
+                         activation="relu",
+                         border_mode='valid'))
         model.add(Flatten())
-        model.add(Dense(256, activation="relu"))
+        model.add(Dense(512, activation="relu"))
         model.add(Dense(self.action_space))
         model.compile(loss="mean_squared_error",
-                           optimizer=RMSprop(lr=0.00025,
+                           optimizer=RMSprop(lr=0.0001,
                                              rho=0.95,
                                              epsilon=0.01),
                            metrics=["accuracy"])
