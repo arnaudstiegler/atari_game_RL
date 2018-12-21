@@ -49,7 +49,6 @@ while(True):
         env.render()
 
         action = agent.act(s_t)
-        print(action)
         new_state,reward,done,_info = env.step(action)
         s_t1 = np.array(new_state)
 

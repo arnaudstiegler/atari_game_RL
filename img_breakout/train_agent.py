@@ -60,7 +60,6 @@ while(True):
     start = timeit.default_timer()
 
     while(done is False):
-        #env.render()
 
         #FOR DDQN
         #Pycharm refers to the base DQL model but when running it from the console, it uses /ram_breakout/DQL

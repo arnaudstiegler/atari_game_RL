@@ -87,7 +87,7 @@ class DQL_agent():
         model.add(Dense(512, activation="relu"))
         model.add(Dense(self.action_space))
         model.compile(loss="mean_squared_error",
-                           optimizer=RMSprop(lr=0.0001,
+                           optimizer=RMSprop(lr=0.00025,
                                              rho=0.95,
                                              epsilon=0.01),
                            metrics=["accuracy"])
